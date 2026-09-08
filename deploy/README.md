@@ -13,6 +13,7 @@ because most of these steps create billable resources.
 | Requirement | Check |
 | --- | --- |
 | A valid payment method on the AWS account | Bedrock bills through AWS Marketplace and refuses to serve without one |
+| The account activated for App Runner | `aws apprunner list-services --region us-east-1` |
 | Docker running locally | `docker info` |
 | AWS CLI authenticated | `aws sts get-caller-identity` |
 | Anthropic use-case form submitted | `aws bedrock get-use-case-for-model-access --region us-east-1` |
@@ -323,6 +324,17 @@ curl -s -X POST $API_URL/api/chat \
 
 ---
 
+## Smoke test
+
+```bash
+./deploy/smoke-test.sh $API_URL
+```
+
+23 checks over the paths a user actually travels, plus the guarantees that make
+the product trustworthy: structured errors, a locked admin surface, sources on
+every card, no fee that is silently zero, and no imputed charge without its
+explanation.
+
 ## Redeploying
 
 ```bash
@@ -379,6 +391,19 @@ aws logs tail /aws/apprunner/forexmatch-api --follow
 
 **`exec format error`** — the image was built for arm64. Rebuild with
 `./deploy/push-image.sh`, which forces `linux/amd64`.
+
+**`SubscriptionRequiredException: The AWS Access Key Id needs a subscription for
+the service`** — the account is not activated for App Runner. This is not an IAM
+problem and no policy will fix it; it appears in every region and normally
+clears once the account is fully activated, which in practice means once a valid
+payment method is verified. Other services can be reachable while App Runner is
+not — during this build ECR, RDS, Secrets Manager, EC2, ECS and Lambda all
+responded while App Runner did not.
+
+If you need a demo URL before that clears, note that a bare ECS task or EC2 host
+serves HTTP only, and a Vercel frontend cannot call an HTTP API — browsers block
+it as mixed content. The services that give you HTTPS without owning a domain
+are App Runner and Lightsail Containers.
 
 **CORS errors in the browser** — `CORS_ORIGINS` must contain the exact Vercel
 origin including the scheme and no trailing slash.
