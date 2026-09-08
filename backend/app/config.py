@@ -50,6 +50,10 @@ class Settings(BaseSettings):
     bedrock_model_id: str = "global.anthropic.claude-sonnet-4-6"
     bedrock_max_tokens: int = 4096
     bedrock_temperature: float = 0.3
+    #: Bedrock exposes Converse and ConverseStream as separately gated
+    #: operations — an account can be cleared for one and not the other. Set
+    #: false to fall back to the non-streaming Converse API.
+    bedrock_streaming: bool = True
 
     # --- FX -----------------------------------------------------------------
     fx_provider: Literal["frankfurter", "exchangerate_host", "static"] = "frankfurter"
