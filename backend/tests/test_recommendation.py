@@ -154,3 +154,50 @@ def test_returns_at_most_three_and_never_pads(uk_student_profile):
 def test_match_percentage_is_a_whole_number(uk_student_profile):
     result = recommend(uk_student_profile, [make_card(name="Any")], gbp_inr_table())
     assert isinstance(result.recommended.match_percentage, int)
+
+
+def test_zero_markup_conversion_beats_a_full_spread(uk_student_profile):
+    """Converting at 0% is not the same drawback as converting at 3.5%."""
+    from app.enums import ScoreComponent
+
+    free_conversion = make_card(
+        name="Zero Markup", wallet_currencies=("USD",), cross_currency_pct=Decimal("0")
+    )
+    full_spread = make_card(
+        name="Full Spread", wallet_currencies=("USD",), cross_currency_pct=Decimal("3.5")
+    )
+
+    result = recommend(uk_student_profile, [free_conversion, full_spread], gbp_inr_table())
+
+    zero = next(e for e in result.comparison if e.card.card_name == "Zero Markup")
+    spread = next(e for e in result.comparison if e.card.card_name == "Full Spread")
+
+    zero_score = zero.score_for(ScoreComponent.CURRENCY_SUPPORT).score
+    spread_score = spread.score_for(ScoreComponent.CURRENCY_SUPPORT).score
+    assert zero_score > spread_score
+    assert "no cross-currency markup" in zero.score_for(ScoreComponent.CURRENCY_SUPPORT).explanation
+
+
+def test_card_with_no_currency_support_and_no_conversion_terms_is_excluded(uk_student_profile):
+    """It cannot be used at the destination, so it is filtered rather than scored."""
+    published = make_card(name="Published", wallet_currencies=("USD",), cross_currency_pct=Decimal("3.5"))
+    silent = make_card(name="Silent", wallet_currencies=("USD",), cross_currency_pct=None)
+
+    result = recommend(uk_student_profile, [published, silent], gbp_inr_table())
+
+    excluded = {e.card_name: e.reason for e in result.excluded}
+    assert "Silent" in excluded
+    assert "cross-currency" in excluded["Silent"]
+    assert [e.card.card_name for e in result.comparison] == ["Published"]
+
+
+def test_unverified_currency_list_is_reported_not_asserted(uk_student_profile):
+    """We must not claim a card lacks GBP when we simply never confirmed it."""
+    from app.enums import ScoreComponent
+
+    unverified = make_card(name="Unverified", wallet_currencies=())
+    result = recommend(uk_student_profile, [unverified], gbp_inr_table())
+
+    explanation = result.recommended.score_for(ScoreComponent.CURRENCY_SUPPORT).explanation
+    assert "could not be verified" in explanation
+    assert "does not" not in explanation.lower()

@@ -156,12 +156,19 @@ def score_currency(card: CardFacts, profile: UserProfile, usage: UsageProfile) -
         detail = f"Supports {target}, but not as a dedicated wallet"
     else:
         cross = card.fee(FeeType.CROSS_CURRENCY)
-        if cross is not None and cross.effective_percentage is not None:
-            score = 30.0
-            detail = (
-                f"Does not hold {target}; every purchase is converted at "
-                f"{cross.effective_percentage}%"
-            )
+        markup = cross.effective_percentage if cross is not None else None
+        if markup is not None:
+            # Converting every purchase is a real drawback, but converting at no
+            # markup is far better than converting at 3.5%. Scoring both the same
+            # would rank a zero-markup card as though it charged full spread.
+            score = _clamp(70.0 - float(markup) * 10.0)
+            if markup == 0:
+                detail = (
+                    f"Does not hold {target}, so purchases are converted — but the provider "
+                    "charges no cross-currency markup"
+                )
+            else:
+                detail = f"Does not hold {target}; every purchase is converted at {markup}%"
         else:
             score = 20.0
             detail = f"Does not hold {target}, and the conversion charge is not published"

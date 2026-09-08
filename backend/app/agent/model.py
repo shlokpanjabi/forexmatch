@@ -60,8 +60,10 @@ def build_model(settings: Settings | None = None) -> Model:
     settings = settings or get_settings()
 
     if settings.model_provider == "mock":
-        logger.info("model.mock_selected")
-        return MockModel()
+        from app.agent.offline import OfflineDemoModel
+
+        logger.info("model.offline_demo_selected")
+        return OfflineDemoModel()
 
     from strands.models import BedrockModel
 
