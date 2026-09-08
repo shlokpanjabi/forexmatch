@@ -1,0 +1,28 @@
+# Local PostgreSQL for ForexMatch.
+#
+# The backend and frontend run on the host during development:
+#   backend:  uvicorn app.main:app --reload
+#   frontend: npm run dev
+#
+# Redis is intentionally absent — FX rates are cached in PostgreSQL, so there
+# is no second datastore to run (see BUILD.md section 21).
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: forexmatch-postgres
+    environment:
+      POSTGRES_USER: forexmatch
+      POSTGRES_PASSWORD: forexmatch
+      POSTGRES_DB: forexmatch
+    ports:
+      - "5432:5432"
+    volumes:
+      - forexmatch-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U forexmatch -d forexmatch"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  forexmatch-pgdata:
