@@ -272,13 +272,22 @@ published claim rather than an incidental zero.
 
 ## Deployment
 
-**Backend** — `backend/Dockerfile` builds a non-root image suitable for ECS,
-App Runner or any container host. Run `alembic upgrade head` as a separate
-deployment step so scaling cannot race on the schema.
+Step-by-step walkthrough, including IAM policies, teardown and the errors worth
+recognising: [`deploy/README.md`](deploy/README.md).
 
-**Frontend** — `npm run build` produces a standard Next.js build.
+**Frontend** — Vercel, with `frontend/` as the project root.
 
-**Database** — Amazon RDS for PostgreSQL.
+**Backend** — AWS App Runner from `backend/Dockerfile` (non-root, `linux/amd64`).
+Run `alembic upgrade head` as a separate deployment step so scaling cannot race
+on the schema.
+
+**Database** — Amazon RDS for PostgreSQL, reached through an App Runner VPC
+connector. The database URL and admin secret live in Secrets Manager, not in the
+service's environment variables.
+
+**Model access** — the container's IAM role grants only `bedrock:InvokeModel`
+and `bedrock:InvokeModelWithResponseStream` on Anthropic models. No credentials
+are baked into the image.
 
 **Agent** — optionally Amazon Bedrock AgentCore Runtime. See
 [`agentcore/README.md`](agentcore/README.md). The backend remains a conventional

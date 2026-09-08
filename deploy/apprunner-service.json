@@ -1,0 +1,53 @@
+{
+  "ServiceName": "forexmatch-api",
+  "SourceConfiguration": {
+    "ImageRepository": {
+      "ImageIdentifier": "REPLACE_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/forexmatch-api:latest",
+      "ImageRepositoryType": "ECR",
+      "ImageConfiguration": {
+        "Port": "8000",
+        "RuntimeEnvironmentVariables": {
+          "ENVIRONMENT": "production",
+          "LOG_LEVEL": "INFO",
+          "AWS_REGION": "us-east-1",
+          "MODEL_PROVIDER": "bedrock",
+          "BEDROCK_MODEL_ID": "global.anthropic.claude-sonnet-4-6",
+          "BEDROCK_STREAMING": "true",
+          "FX_PROVIDER": "frankfurter",
+          "RESEARCH_PROVIDER": "bedrock",
+          "CORS_ORIGINS": "https://REPLACE_YOUR_APP.vercel.app"
+        },
+        "RuntimeEnvironmentSecrets": {
+          "DATABASE_URL": "arn:aws:secretsmanager:us-east-1:REPLACE_ACCOUNT_ID:secret:forexmatch/database-url",
+          "ADMIN_SECRET": "arn:aws:secretsmanager:us-east-1:REPLACE_ACCOUNT_ID:secret:forexmatch/admin-secret"
+        }
+      }
+    },
+    "AutoDeploymentsEnabled": true,
+    "AuthenticationConfiguration": {
+      "AccessRoleArn": "arn:aws:iam::REPLACE_ACCOUNT_ID:role/ForexMatchAppRunnerECRAccessRole"
+    }
+  },
+  "InstanceConfiguration": {
+    "Cpu": "1024",
+    "Memory": "2048",
+    "InstanceRoleArn": "arn:aws:iam::REPLACE_ACCOUNT_ID:role/ForexMatchAppRunnerInstanceRole"
+  },
+  "HealthCheckConfiguration": {
+    "Protocol": "HTTP",
+    "Path": "/health",
+    "Interval": 10,
+    "Timeout": 5,
+    "HealthyThreshold": 1,
+    "UnhealthyThreshold": 5
+  },
+  "NetworkConfiguration": {
+    "EgressConfiguration": {
+      "EgressType": "VPC",
+      "VpcConnectorArn": "REPLACE_VPC_CONNECTOR_ARN"
+    },
+    "IngressConfiguration": {
+      "IsPubliclyAccessible": true
+    }
+  }
+}
