@@ -33,19 +33,56 @@ class ChatResponse(BaseModel):
     tool_events: list[dict[str, Any]]
 
 
+async def _prior_recommendation_count(db, session_id: uuid.UUID) -> int:
+    from sqlalchemy import func
+
+    from app.db.models import RecommendationRecord
+
+    return (
+        await db.execute(
+            select(func.count())
+            .select_from(RecommendationRecord)
+            .where(RecommendationRecord.session_id == session_id)
+        )
+    ).scalar_one()
+
+
 @router.post("/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest, db: DbSession, analytics: Analytics) -> ChatResponse:
     """Send a message and get the complete reply."""
     is_new = request.session_id is None
+    had_recommendation = (
+        False if is_new else await _prior_recommendation_count(db, request.session_id) > 0
+    )
+    profile_was_ready = False
+    if not is_new:
+        from app.agent.runtime import load_profile
+
+        profile_was_ready = (await load_profile(db, request.session_id)).is_ready_for_recommendation
+
     response = await run_agent(request.session_id, request.message, db)
 
     session_id = str(response.session_id)
     if is_new:
         analytics.capture("session_started", session_id=session_id)
     analytics.capture("message_sent", session_id=session_id)
+
+    # Fires once, on the turn where enough was learned to compare cards.
+    if response.profile.is_ready_for_recommendation and not profile_was_ready:
+        analytics.capture(
+            "profile_completed",
+            session_id=session_id,
+            properties={
+                "destination_country": response.profile.destination_country,
+                "duration_months": response.profile.trip_duration_months,
+                "student_status": response.profile.student_status,
+            },
+        )
+
     if response.recommendation and response.recommendation.recommended:
         analytics.capture(
-            "recommendation_generated",
+            # A second ranking in the same session is a re-rank, not a first result.
+            "recommendation_recalculated" if had_recommendation else "recommendation_generated",
             session_id=session_id,
             properties={
                 "top_card_id": str(response.recommendation.recommended.card.id),

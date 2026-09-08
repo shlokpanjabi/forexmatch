@@ -1,0 +1,480 @@
+{
+  "provider": "WSFx Global Pay",
+  "cards": [
+    {
+      "slug": "wsfx-globalpay-smart-currency-card",
+      "card_name": "GlobalPay Smart Currency Card",
+      "card_type": "multi_currency_forex",
+      "network": "unknown",
+      "description": "Multi-currency forex card issued by YES BANK, carrying 14 foreign currencies plus an INR wallet, managed through the GlobalPay app.",
+      "application_url": "https://www.wsfxglobalpay.com/forex-card/globalpay-smart-currency-card",
+      "sources": [
+        {
+          "key": "product",
+          "url": "https://www.wsfxglobalpay.com/forex-card/globalpay-smart-currency-card",
+          "domain": "wsfxglobalpay.com",
+          "title": "GlobalPay Smart Currency Card — fees and charges",
+          "source_type": "official_product_page",
+          "retrieved_at": "2026-09-08",
+          "last_verified_at": "2026-09-08",
+          "notes": "Per-currency ATM, balance-enquiry and daily-limit figures transcribed from the published fee table. Card is issued by YES BANK."
+        }
+      ],
+      "currencies": [
+        {
+          "code": "USD",
+          "direct_wallet": true,
+          "source": "product"
+        },
+        {
+          "code": "GBP",
+          "direct_wallet": true,
+          "source": "product"
+        },
+        {
+          "code": "EUR",
+          "direct_wallet": true,
+          "source": "product"
+        },
+        {
+          "code": "CAD",
+          "direct_wallet": true,
+          "source": "product"
+        },
+        {
+          "code": "AUD",
+          "direct_wallet": true,
+          "source": "product"
+        },
+        {
+          "code": "SGD",
+          "direct_wallet": true,
+          "source": "product"
+        },
+        {
+          "code": "AED",
+          "direct_wallet": true,
+          "source": "product"
+        },
+        {
+          "code": "JPY",
+          "direct_wallet": true,
+          "source": "product"
+        },
+        {
+          "code": "SAR",
+          "direct_wallet": true,
+          "source": "product"
+        },
+        {
+          "code": "THB",
+          "direct_wallet": true,
+          "source": "product"
+        },
+        {
+          "code": "NZD",
+          "direct_wallet": true,
+          "source": "product"
+        },
+        {
+          "code": "ZAR",
+          "direct_wallet": true,
+          "source": "product"
+        },
+        {
+          "code": "HKD",
+          "direct_wallet": true,
+          "source": "product"
+        },
+        {
+          "code": "CHF",
+          "direct_wallet": true,
+          "source": "product"
+        },
+        {
+          "code": "INR",
+          "direct_wallet": true,
+          "source": "product"
+        }
+      ],
+      "fees": [
+        {
+          "fee_type": "issuance",
+          "amount": "150",
+          "currency": "INR",
+          "conditions": "INR 150 issuance fee",
+          "source": "product"
+        },
+        {
+          "fee_type": "reload",
+          "amount": "100",
+          "currency": "INR",
+          "conditions": "INR 100 per reload",
+          "source": "product"
+        },
+        {
+          "fee_type": "inactivity",
+          "amount": "0",
+          "currency": "INR",
+          "is_waived": true,
+          "conditions": "NIL inactivity fee",
+          "source": "product"
+        },
+        {
+          "fee_type": "cross_currency",
+          "percentage": "3.0",
+          "conditions": "3% of transaction amount",
+          "source": "product"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "2500",
+          "currency": "INR",
+          "conditions": "Lost card replacement at an international location; replacement in India is nil",
+          "source": "product"
+        },
+        {
+          "fee_type": "other",
+          "percentage": "2.0",
+          "conditions": "Cash advance / disbursement fee: 2% of transaction amount",
+          "source": "product"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "2.00",
+          "currency": "USD",
+          "conditions": "ATM cash withdrawal",
+          "source": "product"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "0.50",
+          "currency": "USD",
+          "conditions": "ATM balance enquiry",
+          "source": "product"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "1.50",
+          "currency": "GBP",
+          "conditions": "ATM cash withdrawal",
+          "source": "product"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "0.50",
+          "currency": "GBP",
+          "conditions": "ATM balance enquiry",
+          "source": "product"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "1.75",
+          "currency": "EUR",
+          "conditions": "ATM cash withdrawal",
+          "source": "product"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "0.50",
+          "currency": "EUR",
+          "conditions": "ATM balance enquiry",
+          "source": "product"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "2.50",
+          "currency": "CAD",
+          "conditions": "ATM cash withdrawal",
+          "source": "product"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "0.75",
+          "currency": "CAD",
+          "conditions": "ATM balance enquiry",
+          "source": "product"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "2.50",
+          "currency": "AUD",
+          "conditions": "ATM cash withdrawal",
+          "source": "product"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "0.75",
+          "currency": "AUD",
+          "conditions": "ATM balance enquiry",
+          "source": "product"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "2.75",
+          "currency": "SGD",
+          "conditions": "ATM cash withdrawal",
+          "source": "product"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "0.75",
+          "currency": "SGD",
+          "conditions": "ATM balance enquiry",
+          "source": "product"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "7.25",
+          "currency": "AED",
+          "conditions": "ATM cash withdrawal",
+          "source": "product"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "2.00",
+          "currency": "AED",
+          "conditions": "ATM balance enquiry",
+          "source": "product"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "225.00",
+          "currency": "JPY",
+          "conditions": "ATM cash withdrawal",
+          "source": "product"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "60.00",
+          "currency": "JPY",
+          "conditions": "ATM balance enquiry",
+          "source": "product"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "7.50",
+          "currency": "SAR",
+          "conditions": "ATM cash withdrawal",
+          "source": "product"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "1.75",
+          "currency": "SAR",
+          "conditions": "ATM balance enquiry",
+          "source": "product"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "65.00",
+          "currency": "THB",
+          "conditions": "ATM cash withdrawal",
+          "source": "product"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "16.00",
+          "currency": "THB",
+          "conditions": "ATM balance enquiry",
+          "source": "product"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "2.75",
+          "currency": "NZD",
+          "conditions": "ATM cash withdrawal",
+          "source": "product"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "0.75",
+          "currency": "NZD",
+          "conditions": "ATM balance enquiry",
+          "source": "product"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "28.00",
+          "currency": "ZAR",
+          "conditions": "ATM cash withdrawal",
+          "source": "product"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "7.00",
+          "currency": "ZAR",
+          "conditions": "ATM balance enquiry",
+          "source": "product"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "15.00",
+          "currency": "HKD",
+          "conditions": "ATM cash withdrawal",
+          "source": "product"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "4.00",
+          "currency": "HKD",
+          "conditions": "ATM balance enquiry",
+          "source": "product"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "2.00",
+          "currency": "CHF",
+          "conditions": "ATM cash withdrawal",
+          "source": "product"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "0.50",
+          "currency": "CHF",
+          "conditions": "ATM balance enquiry",
+          "source": "product"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "20.00",
+          "currency": "INR",
+          "conditions": "ATM cash withdrawal",
+          "source": "product"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "8.00",
+          "currency": "INR",
+          "conditions": "ATM balance enquiry",
+          "source": "product"
+        }
+      ],
+      "limits": [
+        {
+          "limit_type": "daily_atm",
+          "amount": "1500",
+          "currency": "USD",
+          "period": "daily",
+          "source": "product"
+        },
+        {
+          "limit_type": "daily_atm",
+          "amount": "1000",
+          "currency": "GBP",
+          "period": "daily",
+          "source": "product"
+        },
+        {
+          "limit_type": "daily_atm",
+          "amount": "1000",
+          "currency": "EUR",
+          "period": "daily",
+          "source": "product"
+        },
+        {
+          "limit_type": "daily_atm",
+          "amount": "1500",
+          "currency": "CAD",
+          "period": "daily",
+          "source": "product"
+        },
+        {
+          "limit_type": "daily_atm",
+          "amount": "2000",
+          "currency": "AUD",
+          "period": "daily",
+          "source": "product"
+        },
+        {
+          "limit_type": "daily_atm",
+          "amount": "1500",
+          "currency": "SGD",
+          "period": "daily",
+          "source": "product"
+        },
+        {
+          "limit_type": "daily_atm",
+          "amount": "5000",
+          "currency": "AED",
+          "period": "daily",
+          "source": "product"
+        },
+        {
+          "limit_type": "daily_atm",
+          "amount": "150000",
+          "currency": "JPY",
+          "period": "daily",
+          "source": "product"
+        },
+        {
+          "limit_type": "daily_atm",
+          "amount": "5000",
+          "currency": "SAR",
+          "period": "daily",
+          "source": "product"
+        },
+        {
+          "limit_type": "daily_atm",
+          "amount": "45000",
+          "currency": "THB",
+          "period": "daily",
+          "source": "product"
+        },
+        {
+          "limit_type": "daily_atm",
+          "amount": "1500",
+          "currency": "NZD",
+          "period": "daily",
+          "source": "product"
+        },
+        {
+          "limit_type": "daily_atm",
+          "amount": "12500",
+          "currency": "ZAR",
+          "period": "daily",
+          "source": "product"
+        },
+        {
+          "limit_type": "daily_atm",
+          "amount": "7500",
+          "currency": "HKD",
+          "period": "daily",
+          "source": "product"
+        },
+        {
+          "limit_type": "daily_atm",
+          "amount": "1000",
+          "currency": "CHF",
+          "period": "daily",
+          "source": "product"
+        },
+        {
+          "limit_type": "daily_atm",
+          "amount": "10000",
+          "currency": "INR",
+          "period": "daily",
+          "source": "product"
+        }
+      ],
+      "benefits": [
+        {
+          "benefit_type": "online_application",
+          "description": "Card can be applied for through the GlobalPay app",
+          "source": "product"
+        },
+        {
+          "benefit_type": "online_reload",
+          "description": "Instant reload through the GlobalPay app",
+          "source": "product"
+        },
+        {
+          "benefit_type": "online_management",
+          "description": "Card managed through the GlobalPay app",
+          "source": "product"
+        }
+      ],
+      "eligibility": []
+    }
+  ]
+}

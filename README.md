@@ -152,14 +152,14 @@ because its issuer published less.
 
 ### What's in the catalogue
 
-14 real products from 6 Indian providers — Axis Bank, HDFC Bank, ICICI Bank,
-YES BANK, BookMyForex and Thomas Cook — with 265 sourced facts.
+16 real products from 7 Indian providers — Axis Bank, HDFC Bank, ICICI Bank,
+YES BANK, BookMyForex, Thomas Cook and WSFx Global Pay — with 346 sourced facts.
 
 Provenance is uneven and the data records that honestly:
 
-- **Axis** publishes a complete PDF fee table, so both Axis cards are fully
-  priced across all 16 currencies, including per-currency ATM and replacement
-  charges.
+- **Axis** and **WSFx Global Pay** publish complete fee tables, so those cards
+  are fully priced across every currency they carry — including per-currency ATM
+  charges, balance-enquiry fees and daily withdrawal limits.
 - **HDFC's** retail pages sit behind bot protection that refused automated
   retrieval. Their figures are stored against the official fee-schedule URLs and
   flagged for re-verification.
@@ -167,9 +167,9 @@ Provenance is uneven and the data records that honestly:
 - Currency lists that could not be verified are left empty, and the engine says
   *"we cannot confirm it holds GBP"* rather than asserting that it does not.
 
-This is below the 15–30 target in the build specification. Adding a fifteenth
-card would have meant inventing data, which the specification forbids and the
-seed loader rejects.
+Every card in the catalogue was reachable from an official source. Where one
+was not, it was left out rather than filled in — the seed loader rejects a fact
+whose source is not declared on its card.
 
 ## Running locally
 
@@ -256,7 +256,7 @@ Frontend: `NEXT_PUBLIC_API_BASE_URL` (default `http://localhost:8000`).
 ## Testing
 
 ```bash
-cd backend && pytest              # 153 tests
+cd backend && pytest              # 170 tests
 cd frontend && npm test           # 15 tests
 ```
 

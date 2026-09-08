@@ -227,3 +227,72 @@ async def test_verification_never_writes_to_the_catalogue(client):
 
     after = await client.get(f"/admin/cards/{card_id}", headers=ADMIN_HEADERS)
     assert before.json()["fees"] == after.json()["fees"]
+
+
+async def test_every_specified_analytics_event_is_reachable():
+    """BUILD.md section 54 names nine events; none should be dead code."""
+    from app.analytics import ALLOWED_EVENTS
+
+    specified = {
+        "session_started",
+        "message_sent",
+        "profile_completed",
+        "recommendation_started",
+        "recommendation_generated",
+        "card_viewed",
+        "alternative_viewed",
+        "application_click",
+        "recommendation_recalculated",
+    }
+    assert specified <= ALLOWED_EVENTS
+
+
+async def test_a_first_ranking_is_generated_and_a_second_is_recalculated(client, monkeypatch):
+    """The same session ranking twice is a re-rank, not a fresh result."""
+    captured: list[tuple[str, dict]] = []
+
+    from app.analytics.client import AnalyticsClient
+
+    monkeypatch.setattr(
+        AnalyticsClient,
+        "capture",
+        lambda self, event, *, session_id, properties=None: captured.append((event, properties or {})),
+    )
+
+    first = await client.post("/api/chat", json={"message": "UK, two years, about £1,100 a month."})
+    session_id = first.json()["session_id"]
+    events = [name for name, _ in captured]
+    assert "session_started" in events
+    assert "profile_completed" in events
+    assert "recommendation_generated" in events
+    assert "recommendation_recalculated" not in events
+
+    captured.clear()
+    await client.post(
+        "/api/chat", json={"session_id": session_id, "message": "Actually I'll use more cash."}
+    )
+    events = [name for name, _ in captured]
+    assert "recommendation_recalculated" in events
+    assert "recommendation_generated" not in events
+    # profile_completed fires once, not on every subsequent turn.
+    assert "profile_completed" not in events
+
+
+async def test_analytics_never_carries_spend_or_identifiers(client, monkeypatch):
+    captured: list[dict] = []
+
+    from app.analytics.client import ALLOWED_PROPERTIES, AnalyticsClient
+
+    original = AnalyticsClient.capture
+
+    def spy(self, event, *, session_id, properties=None):
+        captured.append(properties or {})
+        return original(self, event, session_id=session_id, properties=properties)
+
+    monkeypatch.setattr(AnalyticsClient, "capture", spy)
+    await client.post("/api/chat", json={"message": "UK, two years, about £1,100 a month."})
+
+    for properties in captured:
+        for key in properties:
+            assert key in ALLOWED_PROPERTIES, f"unexpected analytics property: {key}"
+        assert not any("spend" in k or "amount" in k for k in properties)

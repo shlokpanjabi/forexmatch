@@ -18,8 +18,14 @@ sys.path.insert(0, str(BACKEND_ROOT))
 
 TEST_DB = os.environ.get("FOREXMATCH_TEST_DB", "forexmatch_test")
 
+# Point at a test database, never the development one. CI supplies a full URL
+# (its Postgres needs credentials); locally we default to a database on the
+# developer's own server and create it if missing.
+#
 # Must be set before app.config is imported anywhere, since settings are cached.
-os.environ["DATABASE_URL"] = f"postgresql+asyncpg://localhost:5432/{TEST_DB}"
+TEST_DATABASE_URL = os.environ.get("FOREXMATCH_TEST_DATABASE_URL")
+MANAGED_EXTERNALLY = bool(TEST_DATABASE_URL)
+os.environ["DATABASE_URL"] = TEST_DATABASE_URL or f"postgresql+asyncpg://localhost:5432/{TEST_DB}"
 os.environ.setdefault("MODEL_PROVIDER", "mock")
 os.environ.setdefault("FX_PROVIDER", "static")
 os.environ.setdefault("RESEARCH_PROVIDER", "none")
@@ -32,6 +38,9 @@ PSQL_BIN = os.environ.get("PSQL_BIN", "/opt/homebrew/opt/postgresql@17/bin")
 
 
 def _ensure_database() -> None:
+    """Create the local test database. A CI-provided one already exists."""
+    if MANAGED_EXTERNALLY:
+        return
     createdb = Path(PSQL_BIN) / "createdb"
     binary = str(createdb) if createdb.exists() else "createdb"
     subprocess.run([binary, TEST_DB], capture_output=True, check=False)

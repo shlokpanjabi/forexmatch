@@ -353,6 +353,113 @@
         }
       ],
       "eligibility": []
+    },
+    {
+      "slug": "icici-expressions-sapphiro-forex-card",
+      "card_name": "Expressions Sapphiro Forex Prepaid Card",
+      "card_type": "multi_currency_forex",
+      "network": "visa",
+      "description": "Customisable multi-currency forex prepaid card with lounge access and zero cross-currency markup.",
+      "application_url": "https://www.icici.bank.in/personal-banking/cards/forex-cards/expressions-sapphiro-forex-card",
+      "sources": [
+        {
+          "key": "product",
+          "url": "https://www.icici.bank.in/personal-banking/cards/forex-cards/expressions-sapphiro-forex-card",
+          "domain": "icici.bank.in",
+          "title": "Expressions Sapphiro Forex Card",
+          "source_type": "official_product_page",
+          "retrieved_at": "2026-09-08",
+          "last_verified_at": "2026-09-08"
+        },
+        {
+          "key": "soc",
+          "url": "https://www.icici.bank.in/personal-banking/cards/forex-cards/schedule-of-charges",
+          "domain": "icici.bank.in",
+          "title": "Forex Prepaid Card — schedule of charges",
+          "source_type": "official_fee_schedule",
+          "retrieved_at": "2026-09-08",
+          "last_verified_at": "2026-09-08"
+        }
+      ],
+      "currencies": [],
+      "fees": [
+        {
+          "fee_type": "issuance",
+          "amount": "3499",
+          "currency": "INR",
+          "conditions": "₹3,499 + GST joining fee; annual fee NIL",
+          "source": "product"
+        },
+        {
+          "fee_type": "inactivity",
+          "amount": "0",
+          "currency": "INR",
+          "is_waived": true,
+          "conditions": "Annual fee NIL",
+          "source": "product"
+        },
+        {
+          "fee_type": "cross_currency",
+          "amount": "0",
+          "currency": "USD",
+          "is_waived": true,
+          "conditions": "The card page advertises zero cross-currency markup while the bank's general schedule of charges lists 3.5% + GST. Recorded from the product page (higher source-trust priority); flagged for verification.",
+          "source": "product"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "0",
+          "currency": "INR",
+          "is_waived": true,
+          "conditions": "Free replacement if the primary card is lost or damaged",
+          "source": "product"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "is_unknown": true,
+          "conditions": "3 free ATM withdrawals per month worldwide; the charge beyond that is not published",
+          "source": "product"
+        },
+        {
+          "fee_type": "reload",
+          "is_unknown": true,
+          "source": "product"
+        }
+      ],
+      "limits": [],
+      "benefits": [
+        {
+          "benefit_type": "lounge_access",
+          "description": "2 complimentary international lounge accesses",
+          "source": "product"
+        },
+        {
+          "benefit_type": "insurance",
+          "description": "Card protection insurance worth ₹1,600 and cover up to ₹5,00,000 for card loss",
+          "source": "product"
+        },
+        {
+          "benefit_type": "discount",
+          "description": "Uber voucher worth ₹1,000 and Amazon voucher worth ₹500",
+          "source": "product"
+        },
+        {
+          "benefit_type": "travel",
+          "description": "Complimentary international SIM card offered by Visa",
+          "source": "product"
+        },
+        {
+          "benefit_type": "online_application",
+          "description": "Card can be applied for online",
+          "source": "product"
+        },
+        {
+          "benefit_type": "online_management",
+          "description": "Online card management and reload",
+          "source": "product"
+        }
+      ],
+      "eligibility": []
     }
   ]
 }

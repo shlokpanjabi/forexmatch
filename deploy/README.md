@@ -17,6 +17,29 @@ because most of these steps create billable resources.
 | AWS CLI authenticated | `aws sts get-caller-identity` |
 | Anthropic use-case form submitted | `aws bedrock get-use-case-for-model-access --region us-east-1` |
 
+### Deploying before Bedrock works
+
+Bedrock inference and the rest of the stack are gated separately. Bedrock bills
+through **AWS Marketplace**, which needs a card on file; RDS, App Runner and ECR
+bill through ordinary AWS billing, which accepts Direct Debit. So if you are
+waiting on a payment method to authorise, you can still deploy everything and
+have a working public demo today.
+
+Set `MODEL_PROVIDER=mock` in the App Runner environment (step 7). That selects
+the offline model, which drives the **real** tools — the real catalogue, a real
+FX call and the real ranking engine — using keyword matching instead of a
+language model. Tool activity and recommendations are genuine; only the
+conversation is crude, and every reply says so.
+
+When the card clears, flip it with no rebuild and no other change:
+
+```bash
+aws apprunner update-service --service-arn $SERVICE_ARN \
+  --source-configuration '{"ImageRepository":{"ImageConfiguration":{"RuntimeEnvironmentVariables":{"MODEL_PROVIDER":"bedrock"}}}}'
+```
+
+That one-line switch is the reason the model layer is environment-driven.
+
 Confirm Bedrock actually answers before deploying anything — it is the cheapest
 failure to find early:
 
@@ -334,8 +357,11 @@ aws iam delete-role --role-name ForexMatchAppRunnerECRAccessRole
 
 ## Troubleshooting
 
-**`INVALID_PAYMENT_INSTRUMENT`** — Bedrock bills through AWS Marketplace. Add a
-valid card in the Billing console, wait two minutes, retry.
+**`INVALID_PAYMENT_INSTRUMENT`** — Bedrock bills through AWS Marketplace, which
+needs a **card**. A Bacs Direct Debit mandate shown as *Authorization Pending*
+does not satisfy it, and generally will not once active either. Add a credit or
+debit card in the Billing console, wait two minutes, retry. Meanwhile deploy
+with `MODEL_PROVIDER=mock` — see "Deploying before Bedrock works" above.
 
 **`Model use case details have not been submitted`** — open any Anthropic model
 in the Bedrock playground and complete the form. Once per account.

@@ -143,7 +143,15 @@ function Evaluation({
         </div>
       )}
 
-      <details className="mb-3" onToggle={() => track("card_viewed", sessionId, { card_slug: card.slug })}>
+      <details
+        className="mb-3"
+        onToggle={() =>
+          track(isPrimary ? "card_viewed" : "alternative_viewed", sessionId, {
+            card_slug: card.slug,
+            provider: card.provider,
+          })
+        }
+      >
         <summary className="cursor-pointer text-sm text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200">
           Show the full cost calculation
         </summary>
