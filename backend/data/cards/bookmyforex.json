@@ -1,0 +1,238 @@
+{
+  "provider": "BookMyForex",
+  "cards": [
+    {
+      "slug": "bookmyforex-multi-currency-forex-card",
+      "card_name": "Multi-Currency Forex Card",
+      "card_type": "multi_currency_forex",
+      "network": "unknown",
+      "description": "Multi-currency forex card carrying up to 14 currencies, with no issuance, reload, unload or annual fee.",
+      "application_url": "https://www.bookmyforex.com/forex-card/",
+      "sources": [
+        {
+          "key": "product",
+          "url": "https://www.bookmyforex.com/forex-card/",
+          "domain": "bookmyforex.com",
+          "title": "BookMyForex Forex Card",
+          "source_type": "official_product_page",
+          "retrieved_at": "2026-09-08",
+          "last_verified_at": "2026-09-08"
+        }
+      ],
+      "currencies": [
+        {
+          "code": "USD",
+          "direct_wallet": true,
+          "source": "product"
+        },
+        {
+          "code": "GBP",
+          "direct_wallet": true,
+          "source": "product"
+        },
+        {
+          "code": "EUR",
+          "direct_wallet": true,
+          "source": "product"
+        },
+        {
+          "code": "CAD",
+          "direct_wallet": true,
+          "source": "product"
+        },
+        {
+          "code": "AUD",
+          "direct_wallet": true,
+          "source": "product"
+        },
+        {
+          "code": "SGD",
+          "direct_wallet": true,
+          "source": "product"
+        },
+        {
+          "code": "AED",
+          "direct_wallet": true,
+          "source": "product"
+        },
+        {
+          "code": "SAR",
+          "direct_wallet": true,
+          "source": "product"
+        },
+        {
+          "code": "THB",
+          "direct_wallet": true,
+          "source": "product"
+        },
+        {
+          "code": "CHF",
+          "direct_wallet": true,
+          "source": "product"
+        },
+        {
+          "code": "HKD",
+          "direct_wallet": true,
+          "source": "product"
+        },
+        {
+          "code": "NZD",
+          "direct_wallet": true,
+          "source": "product"
+        },
+        {
+          "code": "JPY",
+          "direct_wallet": true,
+          "source": "product"
+        },
+        {
+          "code": "ZAR",
+          "direct_wallet": true,
+          "source": "product"
+        }
+      ],
+      "fees": [
+        {
+          "fee_type": "issuance",
+          "amount": "0",
+          "currency": "INR",
+          "is_waived": true,
+          "conditions": "Zero issuance fee",
+          "source": "product"
+        },
+        {
+          "fee_type": "reload",
+          "amount": "0",
+          "currency": "INR",
+          "is_waived": true,
+          "conditions": "Zero reload fee",
+          "source": "product"
+        },
+        {
+          "fee_type": "encashment",
+          "amount": "0",
+          "currency": "INR",
+          "is_waived": true,
+          "conditions": "Zero unload fee",
+          "source": "product"
+        },
+        {
+          "fee_type": "inactivity",
+          "amount": "0",
+          "currency": "INR",
+          "is_waived": true,
+          "conditions": "Zero annual fee",
+          "source": "product"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "is_unknown": true,
+          "conditions": "The provider describes this charge only as \"minimal\" without publishing a figure, so it is recorded as unknown rather than as zero.",
+          "source": "product"
+        },
+        {
+          "fee_type": "cross_currency",
+          "is_unknown": true,
+          "conditions": "The provider describes this charge only as \"minimal\" without publishing a figure, so it is recorded as unknown rather than as zero.",
+          "source": "product"
+        }
+      ],
+      "limits": [],
+      "benefits": [
+        {
+          "benefit_type": "online_application",
+          "description": "Card can be ordered online",
+          "source": "product"
+        },
+        {
+          "benefit_type": "online_reload",
+          "description": "Card can be reloaded online",
+          "source": "product"
+        }
+      ],
+      "eligibility": []
+    },
+    {
+      "slug": "bookmyforex-single-currency-usd-card",
+      "card_name": "Single Currency Forex Card (USD)",
+      "card_type": "single_currency_forex",
+      "network": "unknown",
+      "description": "US dollar forex card aimed at students and less common destinations, with no ATM or cross-currency fees.",
+      "application_url": "https://www.bookmyforex.com/forex-card/",
+      "sources": [
+        {
+          "key": "product",
+          "url": "https://www.bookmyforex.com/forex-card/",
+          "domain": "bookmyforex.com",
+          "title": "BookMyForex Forex Card",
+          "source_type": "official_product_page",
+          "retrieved_at": "2026-09-08",
+          "last_verified_at": "2026-09-08"
+        }
+      ],
+      "currencies": [
+        {
+          "code": "USD",
+          "direct_wallet": true,
+          "source": "product"
+        }
+      ],
+      "fees": [
+        {
+          "fee_type": "issuance",
+          "amount": "0",
+          "currency": "INR",
+          "is_waived": true,
+          "conditions": "Zero issuance fee",
+          "source": "product"
+        },
+        {
+          "fee_type": "reload",
+          "amount": "0",
+          "currency": "INR",
+          "is_waived": true,
+          "conditions": "Zero reload fee",
+          "source": "product"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "0",
+          "currency": "USD",
+          "is_waived": true,
+          "conditions": "Zero ATM withdrawal fees",
+          "source": "product"
+        },
+        {
+          "fee_type": "cross_currency",
+          "amount": "0",
+          "currency": "USD",
+          "is_waived": true,
+          "conditions": "Zero cross-currency fees",
+          "source": "product"
+        },
+        {
+          "fee_type": "inactivity",
+          "amount": "0",
+          "currency": "INR",
+          "is_waived": true,
+          "conditions": "Zero annual fee",
+          "source": "product"
+        }
+      ],
+      "limits": [],
+      "benefits": [
+        {
+          "benefit_type": "online_application",
+          "description": "Card can be ordered online",
+          "source": "product"
+        },
+        {
+          "benefit_type": "online_reload",
+          "description": "Card can be reloaded online",
+          "source": "product"
+        }
+      ],
+      "eligibility": []
+    }
+  ]
+}

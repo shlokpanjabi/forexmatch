@@ -1,0 +1,358 @@
+{
+  "provider": "ICICI Bank",
+  "cards": [
+    {
+      "slug": "icici-sapphiro-forex-prepaid-card",
+      "card_name": "Sapphiro Forex Prepaid Card",
+      "card_type": "multi_currency_forex",
+      "network": "visa",
+      "description": "Multi-currency prepaid forex card priced by the bank's published forex prepaid card schedule of charges.",
+      "application_url": "https://www.icici.bank.in/personal-banking/cards/travel-card/sapphiro-travel-card",
+      "sources": [
+        {
+          "key": "soc",
+          "url": "https://www.icici.bank.in/personal-banking/cards/forex-cards/schedule-of-charges",
+          "domain": "icici.bank.in",
+          "title": "Forex Prepaid Card — schedule of charges",
+          "source_type": "official_fee_schedule",
+          "retrieved_at": "2026-09-08",
+          "last_verified_at": "2026-09-08"
+        }
+      ],
+      "currencies": [
+        {
+          "code": "USD",
+          "direct_wallet": true,
+          "source": "soc"
+        },
+        {
+          "code": "EUR",
+          "direct_wallet": true,
+          "source": "soc"
+        },
+        {
+          "code": "GBP",
+          "direct_wallet": true,
+          "source": "soc"
+        },
+        {
+          "code": "AUD",
+          "direct_wallet": true,
+          "source": "soc"
+        },
+        {
+          "code": "CAD",
+          "direct_wallet": true,
+          "source": "soc"
+        },
+        {
+          "code": "SGD",
+          "direct_wallet": true,
+          "source": "soc"
+        },
+        {
+          "code": "AED",
+          "direct_wallet": true,
+          "source": "soc"
+        },
+        {
+          "code": "CHF",
+          "direct_wallet": true,
+          "source": "soc"
+        },
+        {
+          "code": "JPY",
+          "direct_wallet": true,
+          "source": "soc"
+        },
+        {
+          "code": "SEK",
+          "direct_wallet": true,
+          "source": "soc"
+        },
+        {
+          "code": "ZAR",
+          "direct_wallet": true,
+          "source": "soc"
+        },
+        {
+          "code": "SAR",
+          "direct_wallet": true,
+          "source": "soc"
+        },
+        {
+          "code": "THB",
+          "direct_wallet": true,
+          "source": "soc"
+        },
+        {
+          "code": "NZD",
+          "direct_wallet": true,
+          "source": "soc"
+        },
+        {
+          "code": "HKD",
+          "direct_wallet": true,
+          "source": "soc"
+        }
+      ],
+      "fees": [
+        {
+          "fee_type": "cross_currency",
+          "percentage": "3.5",
+          "conditions": "3.5% + GST",
+          "source": "soc"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "20.00",
+          "currency": "USD",
+          "conditions": "Replacement at an international location",
+          "source": "soc"
+        },
+        {
+          "fee_type": "transaction",
+          "amount": "0",
+          "currency": "USD",
+          "is_waived": true,
+          "conditions": "POS and online transactions: NIL",
+          "source": "soc"
+        },
+        {
+          "fee_type": "other",
+          "percentage": "2.5",
+          "conditions": "Wallet-to-wallet transfer: 2.5% of transfer amount",
+          "source": "soc"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "is_unknown": true,
+          "conditions": "Published per currency; per-currency figures not established",
+          "source": "soc"
+        },
+        {
+          "fee_type": "issuance",
+          "is_unknown": true,
+          "source": "soc"
+        },
+        {
+          "fee_type": "reload",
+          "is_unknown": true,
+          "source": "soc"
+        }
+      ],
+      "limits": [],
+      "benefits": [
+        {
+          "benefit_type": "online_management",
+          "description": "Online card management",
+          "source": "soc"
+        }
+      ],
+      "eligibility": []
+    },
+    {
+      "slug": "icici-student-sapphiro-forex-prepaid-card",
+      "card_name": "Student Sapphiro Forex Prepaid Card",
+      "card_type": "multi_currency_forex",
+      "network": "visa",
+      "description": "Student multi-currency forex prepaid card bundled with ISIC membership, lounge access and cashback.",
+      "application_url": "https://www.icici.bank.in/personal-banking/cards/forex-cards/student-sapphiro-forex-prepaid-card",
+      "sources": [
+        {
+          "key": "product",
+          "url": "https://www.icici.bank.in/personal-banking/cards/forex-cards/student-sapphiro-forex-prepaid-card",
+          "domain": "icici.bank.in",
+          "title": "Student Sapphiro Forex Prepaid Card",
+          "source_type": "official_product_page",
+          "retrieved_at": "2026-09-08",
+          "last_verified_at": "2026-09-08"
+        },
+        {
+          "key": "soc",
+          "url": "https://www.icici.bank.in/personal-banking/cards/forex-cards/schedule-of-charges",
+          "domain": "icici.bank.in",
+          "title": "Forex Prepaid Card — schedule of charges",
+          "source_type": "official_fee_schedule",
+          "retrieved_at": "2026-09-08",
+          "last_verified_at": "2026-09-08"
+        }
+      ],
+      "currencies": [],
+      "fees": [
+        {
+          "fee_type": "issuance",
+          "amount": "2999",
+          "currency": "INR",
+          "conditions": "₹2999 + GST joining fee; no annual fee for continued use",
+          "source": "product"
+        },
+        {
+          "fee_type": "cross_currency",
+          "amount": "0",
+          "currency": "USD",
+          "is_waived": true,
+          "conditions": "The card page advertises zero cross-currency markup while the bank's general schedule of charges lists 3.5% + GST. Recorded from the product page (higher source-trust priority); flagged for verification.",
+          "source": "product"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "0",
+          "currency": "INR",
+          "is_waived": true,
+          "conditions": "Free replacement if the primary card is lost or damaged",
+          "source": "product"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "is_unknown": true,
+          "conditions": "First 3 withdrawals each month are free of charge; the charge beyond that is not published",
+          "source": "product"
+        },
+        {
+          "fee_type": "reload",
+          "is_unknown": true,
+          "source": "product"
+        }
+      ],
+      "limits": [],
+      "benefits": [
+        {
+          "benefit_type": "lounge_access",
+          "description": "2 complimentary international lounge accesses",
+          "source": "product"
+        },
+        {
+          "benefit_type": "cashback",
+          "description": "5% cashback on grocery and transit spends",
+          "value": "capped at ₹3,000 per month",
+          "source": "product"
+        },
+        {
+          "benefit_type": "insurance",
+          "description": "Card Protection Plus insurance worth ₹1,600 and cover up to ₹5,00,000 for card loss",
+          "source": "product"
+        },
+        {
+          "benefit_type": "travel",
+          "description": "International Student Identity Card (ISIC) membership worth ₹999",
+          "source": "product"
+        },
+        {
+          "benefit_type": "discount",
+          "description": "Uber discount vouchers worth ₹1,000",
+          "source": "product"
+        },
+        {
+          "benefit_type": "online_application",
+          "description": "Card can be applied for online",
+          "source": "product"
+        },
+        {
+          "benefit_type": "online_management",
+          "description": "Online card management and reload",
+          "source": "product"
+        }
+      ],
+      "eligibility": [
+        {
+          "criterion": "student_only",
+          "value": "student",
+          "description": "Offered to students travelling abroad.",
+          "source": "product"
+        }
+      ]
+    },
+    {
+      "slug": "icici-coral-forex-prepaid-card",
+      "card_name": "Coral Forex Prepaid Card",
+      "card_type": "multi_currency_forex",
+      "network": "visa",
+      "description": "Multi-currency forex prepaid card with travel insurance and card-loss cover.",
+      "application_url": "https://www.icici.bank.in/personal-banking/cards/forex-cards/coral-forex-prepaid-card",
+      "sources": [
+        {
+          "key": "product",
+          "url": "https://www.icici.bank.in/personal-banking/cards/forex-cards/coral-forex-prepaid-card",
+          "domain": "icici.bank.in",
+          "title": "Coral Forex Prepaid Card — features and benefits",
+          "source_type": "official_product_page",
+          "retrieved_at": "2026-09-08",
+          "last_verified_at": "2026-09-08"
+        },
+        {
+          "key": "soc",
+          "url": "https://www.icici.bank.in/personal-banking/cards/forex-cards/schedule-of-charges",
+          "domain": "icici.bank.in",
+          "title": "Forex Prepaid Card — schedule of charges",
+          "source_type": "official_fee_schedule",
+          "retrieved_at": "2026-09-08",
+          "last_verified_at": "2026-09-08"
+        }
+      ],
+      "currencies": [],
+      "fees": [
+        {
+          "fee_type": "issuance",
+          "amount": "499",
+          "currency": "INR",
+          "conditions": "₹499 + GST joining fee; no annual fee for continued use",
+          "source": "product"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "0",
+          "currency": "INR",
+          "is_waived": true,
+          "conditions": "Free replacement if the primary card is lost or damaged",
+          "source": "product"
+        },
+        {
+          "fee_type": "cross_currency",
+          "percentage": "3.5",
+          "conditions": "3.5% + GST per the bank's schedule of charges",
+          "source": "soc"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "is_unknown": true,
+          "source": "product"
+        },
+        {
+          "fee_type": "reload",
+          "is_unknown": true,
+          "source": "product"
+        }
+      ],
+      "limits": [],
+      "benefits": [
+        {
+          "benefit_type": "insurance",
+          "description": "Card Protection Plus insurance worth ₹1,600, free travel insurance, and cover up to ₹5,00,000 for card loss",
+          "source": "product"
+        },
+        {
+          "benefit_type": "discount",
+          "description": "BookMyShow voucher worth ₹500 and ₹500 Uber voucher on loading a minimum of USD 1,000",
+          "source": "product"
+        },
+        {
+          "benefit_type": "travel",
+          "description": "Complimentary international SIM card offered by Visa",
+          "source": "product"
+        },
+        {
+          "benefit_type": "online_management",
+          "description": "Online card management and reload",
+          "source": "product"
+        },
+        {
+          "benefit_type": "online_application",
+          "description": "Card can be applied for online",
+          "source": "product"
+        }
+      ],
+      "eligibility": []
+    }
+  ]
+}

@@ -263,7 +263,8 @@ def _price_card(card: CardFacts, usage: UsageProfile, fx: FXRateTable) -> _CardP
         )
 
     # --- ATM withdrawals ----------------------------------------------------
-    atm_fee = card.fee(FeeType.ATM_WITHDRAWAL)
+    # Per-currency ATM pricing is the norm, so ask for the currency in hand.
+    atm_fee = card.fee(FeeType.ATM_WITHDRAWAL, currency=currency)
     if usage.atm_withdrawals_total == 0:
         pricing.components.append(
             _PricedComponent(FeeType.ATM_WITHDRAWAL, Decimal(0), "no cash withdrawals expected")
@@ -300,7 +301,19 @@ def _price_card(card: CardFacts, usage: UsageProfile, fx: FXRateTable) -> _CardP
 
     # --- Cross-currency -----------------------------------------------------
     # Only bites when the card has no wallet in the currency being spent.
-    if card.has_direct_wallet(currency):
+    if not card.currencies:
+        # We have not verified which currencies this card holds. Asserting that
+        # it does not hold the user's currency would be inventing a fact, so the
+        # component is left unknown and imputed like any other missing figure.
+        pricing.components.append(
+            _PricedComponent(
+                FeeType.CROSS_CURRENCY,
+                None,
+                f"unverified whether this card holds {currency}",
+                "supported currencies not verified",
+            )
+        )
+    elif card.has_direct_wallet(currency):
         pricing.components.append(
             _PricedComponent(
                 FeeType.CROSS_CURRENCY,

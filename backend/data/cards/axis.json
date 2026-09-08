@@ -1,0 +1,967 @@
+{
+  "provider": "Axis Bank",
+  "cards": [
+    {
+      "slug": "axis-multi-currency-forex-card",
+      "card_name": "Multi-Currency Forex Card",
+      "card_type": "multi_currency_forex",
+      "network": "visa",
+      "description": "Prepaid travel card holding up to 16 currencies, usable at international POS terminals and ATMs.",
+      "application_url": "https://www.axis.bank.in/forex/forex-card/multi-currency-forex-card",
+      "sources": [
+        {
+          "key": "fees",
+          "url": "https://www.axis.bank.in/docs/default-source/collection-solutions/fees-and-charges-multicurrency-forex-card-21sept22.pdf",
+          "domain": "axis.bank.in",
+          "title": "Fees and Charges — Multi-Currency Forex Card",
+          "source_type": "official_fee_schedule",
+          "retrieved_at": "2026-09-08",
+          "last_verified_at": "2026-09-08",
+          "notes": "Figures transcribed from the published PDF fee table."
+        }
+      ],
+      "currencies": [
+        {
+          "code": "USD",
+          "direct_wallet": true,
+          "source": "fees"
+        },
+        {
+          "code": "EUR",
+          "direct_wallet": true,
+          "source": "fees"
+        },
+        {
+          "code": "GBP",
+          "direct_wallet": true,
+          "source": "fees"
+        },
+        {
+          "code": "AUD",
+          "direct_wallet": true,
+          "source": "fees"
+        },
+        {
+          "code": "CAD",
+          "direct_wallet": true,
+          "source": "fees"
+        },
+        {
+          "code": "CHF",
+          "direct_wallet": true,
+          "source": "fees"
+        },
+        {
+          "code": "JPY",
+          "direct_wallet": true,
+          "source": "fees"
+        },
+        {
+          "code": "SGD",
+          "direct_wallet": true,
+          "source": "fees"
+        },
+        {
+          "code": "SEK",
+          "direct_wallet": true,
+          "source": "fees"
+        },
+        {
+          "code": "AED",
+          "direct_wallet": true,
+          "source": "fees"
+        },
+        {
+          "code": "SAR",
+          "direct_wallet": true,
+          "source": "fees"
+        },
+        {
+          "code": "THB",
+          "direct_wallet": true,
+          "source": "fees"
+        },
+        {
+          "code": "NZD",
+          "direct_wallet": true,
+          "source": "fees"
+        },
+        {
+          "code": "HKD",
+          "direct_wallet": true,
+          "source": "fees"
+        },
+        {
+          "code": "ZAR",
+          "direct_wallet": true,
+          "source": "fees"
+        },
+        {
+          "code": "DKK",
+          "direct_wallet": true,
+          "source": "fees"
+        }
+      ],
+      "fees": [
+        {
+          "fee_type": "issuance",
+          "amount": "300",
+          "currency": "INR",
+          "conditions": "Rs. 300.00 + GST (initial sale fee)",
+          "source": "fees"
+        },
+        {
+          "fee_type": "reload",
+          "amount": "100",
+          "currency": "INR",
+          "conditions": "Rs. 100.00 + GST, charged per currency",
+          "source": "fees"
+        },
+        {
+          "fee_type": "encashment",
+          "amount": "100",
+          "currency": "INR",
+          "conditions": "Rs. 100.00 + GST, charged per currency",
+          "source": "fees"
+        },
+        {
+          "fee_type": "cross_currency",
+          "percentage": "3.50",
+          "conditions": "Cross-currency usage charge of 3.50%",
+          "source": "fees"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "2.25",
+          "currency": "USD",
+          "conditions": "International Visa/Mastercard ATM cash withdrawal",
+          "source": "fees"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "0.5",
+          "currency": "USD",
+          "conditions": "International ATM balance enquiry",
+          "source": "fees"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "15",
+          "currency": "USD",
+          "conditions": "Replacement card fee (international); nil in India",
+          "source": "fees"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "1.69",
+          "currency": "EUR",
+          "conditions": "International Visa/Mastercard ATM cash withdrawal",
+          "source": "fees"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "0.5",
+          "currency": "EUR",
+          "conditions": "International ATM balance enquiry",
+          "source": "fees"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "15",
+          "currency": "EUR",
+          "conditions": "Replacement card fee (international); nil in India",
+          "source": "fees"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "1.41",
+          "currency": "GBP",
+          "conditions": "International Visa/Mastercard ATM cash withdrawal",
+          "source": "fees"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "0.5",
+          "currency": "GBP",
+          "conditions": "International ATM balance enquiry",
+          "source": "fees"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "10",
+          "currency": "GBP",
+          "conditions": "Replacement card fee (international); nil in India",
+          "source": "fees"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "2.81",
+          "currency": "AUD",
+          "conditions": "International Visa/Mastercard ATM cash withdrawal",
+          "source": "fees"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "0.65",
+          "currency": "AUD",
+          "conditions": "International ATM balance enquiry",
+          "source": "fees"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "20",
+          "currency": "AUD",
+          "conditions": "Replacement card fee (international); nil in India",
+          "source": "fees"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "2.81",
+          "currency": "CAD",
+          "conditions": "International Visa/Mastercard ATM cash withdrawal",
+          "source": "fees"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "0.65",
+          "currency": "CAD",
+          "conditions": "International ATM balance enquiry",
+          "source": "fees"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "20",
+          "currency": "CAD",
+          "conditions": "Replacement card fee (international); nil in India",
+          "source": "fees"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "2.81",
+          "currency": "CHF",
+          "conditions": "International Visa/Mastercard ATM cash withdrawal",
+          "source": "fees"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "0.7",
+          "currency": "CHF",
+          "conditions": "International ATM balance enquiry",
+          "source": "fees"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "15",
+          "currency": "CHF",
+          "conditions": "Replacement card fee (international); nil in India",
+          "source": "fees"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "281.25",
+          "currency": "JPY",
+          "conditions": "International Visa/Mastercard ATM cash withdrawal",
+          "source": "fees"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "65",
+          "currency": "JPY",
+          "conditions": "International ATM balance enquiry",
+          "source": "fees"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "2000",
+          "currency": "JPY",
+          "conditions": "Replacement card fee (international); nil in India",
+          "source": "fees"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "3.66",
+          "currency": "SGD",
+          "conditions": "International Visa/Mastercard ATM cash withdrawal",
+          "source": "fees"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "0.95",
+          "currency": "SGD",
+          "conditions": "International ATM balance enquiry",
+          "source": "fees"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "24",
+          "currency": "SGD",
+          "conditions": "Replacement card fee (international); nil in India",
+          "source": "fees"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "16.88",
+          "currency": "SEK",
+          "conditions": "International Visa/Mastercard ATM cash withdrawal",
+          "source": "fees"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "3.5",
+          "currency": "SEK",
+          "conditions": "International ATM balance enquiry",
+          "source": "fees"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "150",
+          "currency": "SEK",
+          "conditions": "Replacement card fee (international); nil in India",
+          "source": "fees"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "8.16",
+          "currency": "AED",
+          "conditions": "International Visa/Mastercard ATM cash withdrawal",
+          "source": "fees"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "1.75",
+          "currency": "AED",
+          "conditions": "International ATM balance enquiry",
+          "source": "fees"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "60",
+          "currency": "AED",
+          "conditions": "Replacement card fee (international); nil in India",
+          "source": "fees"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "8.16",
+          "currency": "SAR",
+          "conditions": "International Visa/Mastercard ATM cash withdrawal",
+          "source": "fees"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "1.75",
+          "currency": "SAR",
+          "conditions": "International ATM balance enquiry",
+          "source": "fees"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "60",
+          "currency": "SAR",
+          "conditions": "Replacement card fee (international); nil in India",
+          "source": "fees"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "90.00",
+          "currency": "THB",
+          "conditions": "International Visa/Mastercard ATM cash withdrawal",
+          "source": "fees"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "25",
+          "currency": "THB",
+          "conditions": "International ATM balance enquiry",
+          "source": "fees"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "550",
+          "currency": "THB",
+          "conditions": "Replacement card fee (international); nil in India",
+          "source": "fees"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "3.66",
+          "currency": "NZD",
+          "conditions": "International Visa/Mastercard ATM cash withdrawal",
+          "source": "fees"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "1",
+          "currency": "NZD",
+          "conditions": "International ATM balance enquiry",
+          "source": "fees"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "24",
+          "currency": "NZD",
+          "conditions": "Replacement card fee (international); nil in India",
+          "source": "fees"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "16.88",
+          "currency": "HKD",
+          "conditions": "International Visa/Mastercard ATM cash withdrawal",
+          "source": "fees"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "4",
+          "currency": "HKD",
+          "conditions": "International ATM balance enquiry",
+          "source": "fees"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "120",
+          "currency": "HKD",
+          "conditions": "Replacement card fee (international); nil in India",
+          "source": "fees"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "28.13",
+          "currency": "ZAR",
+          "conditions": "International Visa/Mastercard ATM cash withdrawal",
+          "source": "fees"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "6",
+          "currency": "ZAR",
+          "conditions": "International ATM balance enquiry",
+          "source": "fees"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "220",
+          "currency": "ZAR",
+          "conditions": "Replacement card fee (international); nil in India",
+          "source": "fees"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "15.75",
+          "currency": "DKK",
+          "conditions": "International Visa/Mastercard ATM cash withdrawal",
+          "source": "fees"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "4",
+          "currency": "DKK",
+          "conditions": "International ATM balance enquiry",
+          "source": "fees"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "100",
+          "currency": "DKK",
+          "conditions": "Replacement card fee (international); nil in India",
+          "source": "fees"
+        }
+      ],
+      "limits": [],
+      "benefits": [
+        {
+          "benefit_type": "online_reload",
+          "description": "Card can be reloaded without visiting a branch",
+          "source": "fees"
+        },
+        {
+          "benefit_type": "online_application",
+          "description": "Card can be applied for online",
+          "source": "fees"
+        }
+      ],
+      "eligibility": []
+    },
+    {
+      "slug": "axis-club-vistara-forex-card",
+      "card_name": "Club Vistara Forex Card",
+      "card_type": "multi_currency_forex",
+      "network": "visa",
+      "description": "Co-branded multi-currency forex card on the same 16-currency platform as the Axis Multi-Currency Forex Card, with a higher initial sale fee.",
+      "application_url": "https://www.axis.bank.in/forex/forex-card/multi-currency-forex-card",
+      "sources": [
+        {
+          "key": "fees",
+          "url": "https://www.axisbank.com/docs/default-source/default-document-library/fees-and-charges-club-vistara-forex-card.pdf",
+          "domain": "axisbank.com",
+          "title": "Fees and Charges — Club Vistara Forex Card",
+          "source_type": "official_fee_schedule",
+          "retrieved_at": "2026-09-08",
+          "last_verified_at": "2026-09-08",
+          "notes": "Transcribed from the published PDF. The Vistara brand has since been folded into Air India, so this product is a candidate for verification."
+        }
+      ],
+      "currencies": [
+        {
+          "code": "USD",
+          "direct_wallet": true,
+          "source": "fees"
+        },
+        {
+          "code": "EUR",
+          "direct_wallet": true,
+          "source": "fees"
+        },
+        {
+          "code": "GBP",
+          "direct_wallet": true,
+          "source": "fees"
+        },
+        {
+          "code": "AUD",
+          "direct_wallet": true,
+          "source": "fees"
+        },
+        {
+          "code": "CAD",
+          "direct_wallet": true,
+          "source": "fees"
+        },
+        {
+          "code": "CHF",
+          "direct_wallet": true,
+          "source": "fees"
+        },
+        {
+          "code": "JPY",
+          "direct_wallet": true,
+          "source": "fees"
+        },
+        {
+          "code": "SGD",
+          "direct_wallet": true,
+          "source": "fees"
+        },
+        {
+          "code": "SEK",
+          "direct_wallet": true,
+          "source": "fees"
+        },
+        {
+          "code": "AED",
+          "direct_wallet": true,
+          "source": "fees"
+        },
+        {
+          "code": "SAR",
+          "direct_wallet": true,
+          "source": "fees"
+        },
+        {
+          "code": "THB",
+          "direct_wallet": true,
+          "source": "fees"
+        },
+        {
+          "code": "NZD",
+          "direct_wallet": true,
+          "source": "fees"
+        },
+        {
+          "code": "HKD",
+          "direct_wallet": true,
+          "source": "fees"
+        },
+        {
+          "code": "ZAR",
+          "direct_wallet": true,
+          "source": "fees"
+        },
+        {
+          "code": "DKK",
+          "direct_wallet": true,
+          "source": "fees"
+        }
+      ],
+      "fees": [
+        {
+          "fee_type": "issuance",
+          "amount": "500",
+          "currency": "INR",
+          "conditions": "Rs. 500.00 + GST (initial sale fee)",
+          "source": "fees"
+        },
+        {
+          "fee_type": "reload",
+          "amount": "100",
+          "currency": "INR",
+          "conditions": "Rs. 100.00 + GST",
+          "source": "fees"
+        },
+        {
+          "fee_type": "encashment",
+          "amount": "100",
+          "currency": "INR",
+          "conditions": "Rs. 100.00 + GST",
+          "source": "fees"
+        },
+        {
+          "fee_type": "cross_currency",
+          "percentage": "3.50",
+          "conditions": "Cross-currency usage charge of 3.50%",
+          "source": "fees"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "2.25",
+          "currency": "USD",
+          "conditions": "International Visa/Mastercard ATM cash withdrawal",
+          "source": "fees"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "0.5",
+          "currency": "USD",
+          "conditions": "International ATM balance enquiry",
+          "source": "fees"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "15",
+          "currency": "USD",
+          "conditions": "Replacement card fee (international)",
+          "source": "fees"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "1.69",
+          "currency": "EUR",
+          "conditions": "International Visa/Mastercard ATM cash withdrawal",
+          "source": "fees"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "0.5",
+          "currency": "EUR",
+          "conditions": "International ATM balance enquiry",
+          "source": "fees"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "15",
+          "currency": "EUR",
+          "conditions": "Replacement card fee (international)",
+          "source": "fees"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "1.41",
+          "currency": "GBP",
+          "conditions": "International Visa/Mastercard ATM cash withdrawal",
+          "source": "fees"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "0.5",
+          "currency": "GBP",
+          "conditions": "International ATM balance enquiry",
+          "source": "fees"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "10",
+          "currency": "GBP",
+          "conditions": "Replacement card fee (international)",
+          "source": "fees"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "2.81",
+          "currency": "AUD",
+          "conditions": "International Visa/Mastercard ATM cash withdrawal",
+          "source": "fees"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "0.65",
+          "currency": "AUD",
+          "conditions": "International ATM balance enquiry",
+          "source": "fees"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "20",
+          "currency": "AUD",
+          "conditions": "Replacement card fee (international)",
+          "source": "fees"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "2.81",
+          "currency": "CAD",
+          "conditions": "International Visa/Mastercard ATM cash withdrawal",
+          "source": "fees"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "0.65",
+          "currency": "CAD",
+          "conditions": "International ATM balance enquiry",
+          "source": "fees"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "20",
+          "currency": "CAD",
+          "conditions": "Replacement card fee (international)",
+          "source": "fees"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "2.81",
+          "currency": "CHF",
+          "conditions": "International Visa/Mastercard ATM cash withdrawal",
+          "source": "fees"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "0.7",
+          "currency": "CHF",
+          "conditions": "International ATM balance enquiry",
+          "source": "fees"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "15",
+          "currency": "CHF",
+          "conditions": "Replacement card fee (international)",
+          "source": "fees"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "281.25",
+          "currency": "JPY",
+          "conditions": "International Visa/Mastercard ATM cash withdrawal",
+          "source": "fees"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "65",
+          "currency": "JPY",
+          "conditions": "International ATM balance enquiry",
+          "source": "fees"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "2000",
+          "currency": "JPY",
+          "conditions": "Replacement card fee (international)",
+          "source": "fees"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "3.66",
+          "currency": "SGD",
+          "conditions": "International Visa/Mastercard ATM cash withdrawal",
+          "source": "fees"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "0.95",
+          "currency": "SGD",
+          "conditions": "International ATM balance enquiry",
+          "source": "fees"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "24",
+          "currency": "SGD",
+          "conditions": "Replacement card fee (international)",
+          "source": "fees"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "16.88",
+          "currency": "SEK",
+          "conditions": "International Visa/Mastercard ATM cash withdrawal",
+          "source": "fees"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "3.5",
+          "currency": "SEK",
+          "conditions": "International ATM balance enquiry",
+          "source": "fees"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "150",
+          "currency": "SEK",
+          "conditions": "Replacement card fee (international)",
+          "source": "fees"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "8.16",
+          "currency": "AED",
+          "conditions": "International Visa/Mastercard ATM cash withdrawal",
+          "source": "fees"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "1.75",
+          "currency": "AED",
+          "conditions": "International ATM balance enquiry",
+          "source": "fees"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "60",
+          "currency": "AED",
+          "conditions": "Replacement card fee (international)",
+          "source": "fees"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "8.16",
+          "currency": "SAR",
+          "conditions": "International Visa/Mastercard ATM cash withdrawal",
+          "source": "fees"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "1.75",
+          "currency": "SAR",
+          "conditions": "International ATM balance enquiry",
+          "source": "fees"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "60",
+          "currency": "SAR",
+          "conditions": "Replacement card fee (international)",
+          "source": "fees"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "90.00",
+          "currency": "THB",
+          "conditions": "International Visa/Mastercard ATM cash withdrawal",
+          "source": "fees"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "25",
+          "currency": "THB",
+          "conditions": "International ATM balance enquiry",
+          "source": "fees"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "550",
+          "currency": "THB",
+          "conditions": "Replacement card fee (international)",
+          "source": "fees"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "3.66",
+          "currency": "NZD",
+          "conditions": "International Visa/Mastercard ATM cash withdrawal",
+          "source": "fees"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "1",
+          "currency": "NZD",
+          "conditions": "International ATM balance enquiry",
+          "source": "fees"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "24",
+          "currency": "NZD",
+          "conditions": "Replacement card fee (international)",
+          "source": "fees"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "16.88",
+          "currency": "HKD",
+          "conditions": "International Visa/Mastercard ATM cash withdrawal",
+          "source": "fees"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "4",
+          "currency": "HKD",
+          "conditions": "International ATM balance enquiry",
+          "source": "fees"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "120",
+          "currency": "HKD",
+          "conditions": "Replacement card fee (international)",
+          "source": "fees"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "28.13",
+          "currency": "ZAR",
+          "conditions": "International Visa/Mastercard ATM cash withdrawal",
+          "source": "fees"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "6",
+          "currency": "ZAR",
+          "conditions": "International ATM balance enquiry",
+          "source": "fees"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "220",
+          "currency": "ZAR",
+          "conditions": "Replacement card fee (international)",
+          "source": "fees"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "15.75",
+          "currency": "DKK",
+          "conditions": "International Visa/Mastercard ATM cash withdrawal",
+          "source": "fees"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "4",
+          "currency": "DKK",
+          "conditions": "International ATM balance enquiry",
+          "source": "fees"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "100",
+          "currency": "DKK",
+          "conditions": "Replacement card fee (international)",
+          "source": "fees"
+        }
+      ],
+      "limits": [],
+      "benefits": [
+        {
+          "benefit_type": "travel",
+          "description": "Co-branded with the Club Vistara frequent-flyer programme",
+          "source": "fees"
+        },
+        {
+          "benefit_type": "online_reload",
+          "description": "Card can be reloaded without visiting a branch",
+          "source": "fees"
+        }
+      ],
+      "eligibility": []
+    }
+  ]
+}

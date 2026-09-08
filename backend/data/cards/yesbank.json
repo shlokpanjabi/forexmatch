@@ -1,0 +1,64 @@
+{
+  "provider": "YES BANK",
+  "cards": [
+    {
+      "slug": "yes-bank-visa-multi-currency-travel-card",
+      "card_name": "VISA Multi-Currency Travel Card",
+      "card_type": "multi_currency_forex",
+      "network": "visa",
+      "description": "Foreign-currency denominated prepaid travel card that can hold multiple currencies on one card.",
+      "application_url": "https://www.yesbank.in/travel-card",
+      "sources": [
+        {
+          "key": "product",
+          "url": "https://www.yesbank.in/travel-card",
+          "domain": "yesbank.in",
+          "title": "YES BANK Travel Card",
+          "source_type": "official_product_page",
+          "retrieved_at": "2026-09-08",
+          "last_verified_at": "2026-09-08"
+        },
+        {
+          "key": "tnc",
+          "url": "https://www.yesbank.in/content/published/api/v1.1/assets/CONT0C5CD1BD6A27487986FCBF5665B2D8B7/native/visa_mctc_cardholders_tnc_pdf.pdf",
+          "domain": "yesbank.in",
+          "title": "Terms and conditions — VISA Multi Currency Travel Card",
+          "source_type": "official_terms",
+          "retrieved_at": "2026-09-08",
+          "last_verified_at": "2026-09-08",
+          "notes": "Terms confirm a currency conversion fee is charged but do not publish the rate."
+        }
+      ],
+      "currencies": [],
+      "fees": [
+        {
+          "fee_type": "issuance",
+          "is_unknown": true,
+          "conditions": "Not published in the material reviewed",
+          "source": "product"
+        },
+        {
+          "fee_type": "reload",
+          "is_unknown": true,
+          "conditions": "Not published in the material reviewed",
+          "source": "product"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "is_unknown": true,
+          "conditions": "Terms note ATM operators may levy their own charges; YES BANK's own figure is not published here",
+          "source": "tnc"
+        },
+        {
+          "fee_type": "cross_currency",
+          "is_unknown": true,
+          "conditions": "Terms state a currency conversion fee applies but do not state the rate",
+          "source": "tnc"
+        }
+      ],
+      "limits": [],
+      "benefits": [],
+      "eligibility": []
+    }
+  ]
+}

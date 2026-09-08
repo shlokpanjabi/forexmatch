@@ -1,0 +1,185 @@
+{
+  "provider": "Thomas Cook",
+  "cards": [
+    {
+      "slug": "thomas-cook-borderless-prepaid-card",
+      "card_name": "Borderless Prepaid Multicurrency Card",
+      "card_type": "multi_currency_forex",
+      "network": "unknown",
+      "description": "Multicurrency prepaid travel card carrying up to 28 currencies, with no issuance or reload fee.",
+      "application_url": "https://www.thomascook.in/foreign-exchange/borderless-prepaid-multicurrency-card",
+      "sources": [
+        {
+          "key": "product",
+          "url": "https://www.thomascook.in/foreign-exchange/borderless-prepaid-multicurrency-card",
+          "domain": "thomascook.in",
+          "title": "Borderless Prepaid Multicurrency Card",
+          "source_type": "official_product_page",
+          "retrieved_at": "2026-09-08",
+          "last_verified_at": "2026-09-08"
+        },
+        {
+          "key": "cards",
+          "url": "https://www.thomascook.in/foreign-exchange/travel-prepaid-forex-cards",
+          "domain": "thomascook.in",
+          "title": "Travel prepaid forex cards",
+          "source_type": "official_product_page",
+          "retrieved_at": "2026-09-08",
+          "last_verified_at": "2026-09-08"
+        }
+      ],
+      "currencies": [],
+      "fees": [
+        {
+          "fee_type": "issuance",
+          "amount": "0",
+          "currency": "INR",
+          "is_waived": true,
+          "conditions": "Zero issuance fee",
+          "source": "cards"
+        },
+        {
+          "fee_type": "reload",
+          "amount": "0",
+          "currency": "INR",
+          "is_waived": true,
+          "conditions": "Zero reload fee",
+          "source": "cards"
+        },
+        {
+          "fee_type": "inactivity",
+          "amount": "0",
+          "currency": "INR",
+          "is_waived": true,
+          "conditions": "No annual maintenance charge",
+          "source": "cards"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "is_unknown": true,
+          "conditions": "One complimentary ATM withdrawal per calendar month; standard charges thereafter are not published",
+          "source": "product"
+        },
+        {
+          "fee_type": "cross_currency",
+          "is_unknown": true,
+          "conditions": "Currency conversion fees apply outside designated usage areas; the rate is not published",
+          "source": "cards"
+        }
+      ],
+      "limits": [],
+      "benefits": [
+        {
+          "benefit_type": "lounge_access",
+          "description": "Lounge access at international airports in India",
+          "source": "product"
+        },
+        {
+          "benefit_type": "discount",
+          "description": "25% off tours and activities with Klook",
+          "source": "product"
+        },
+        {
+          "benefit_type": "online_reload",
+          "description": "Card can be reloaded online",
+          "source": "cards"
+        },
+        {
+          "benefit_type": "online_application",
+          "description": "Card can be ordered online",
+          "source": "cards"
+        }
+      ],
+      "eligibility": []
+    },
+    {
+      "slug": "thomas-cook-one-currency-card",
+      "card_name": "One Currency Card",
+      "card_type": "single_currency_forex",
+      "network": "unknown",
+      "description": "US dollar prepaid card usable worldwide with no cross-currency conversion fee.",
+      "application_url": "https://www.thomascook.in/foreign-exchange/one-currency-card",
+      "sources": [
+        {
+          "key": "product",
+          "url": "https://www.thomascook.in/foreign-exchange/one-currency-card",
+          "domain": "thomascook.in",
+          "title": "One Currency Card — zero forex markup",
+          "source_type": "official_product_page",
+          "retrieved_at": "2026-09-08",
+          "last_verified_at": "2026-09-08"
+        },
+        {
+          "key": "cards",
+          "url": "https://www.thomascook.in/foreign-exchange/travel-prepaid-forex-cards",
+          "domain": "thomascook.in",
+          "title": "Travel prepaid forex cards",
+          "source_type": "official_product_page",
+          "retrieved_at": "2026-09-08",
+          "last_verified_at": "2026-09-08"
+        }
+      ],
+      "currencies": [
+        {
+          "code": "USD",
+          "direct_wallet": true,
+          "source": "product"
+        }
+      ],
+      "fees": [
+        {
+          "fee_type": "issuance",
+          "amount": "0",
+          "currency": "INR",
+          "is_waived": true,
+          "conditions": "Zero issuance fee",
+          "source": "cards"
+        },
+        {
+          "fee_type": "reload",
+          "amount": "0",
+          "currency": "INR",
+          "is_waived": true,
+          "conditions": "Zero reload fee",
+          "source": "cards"
+        },
+        {
+          "fee_type": "cross_currency",
+          "amount": "0",
+          "currency": "USD",
+          "is_waived": true,
+          "conditions": "Load in USD and spend worldwide with zero cross-currency conversion fees",
+          "source": "product"
+        },
+        {
+          "fee_type": "inactivity",
+          "amount": "0",
+          "currency": "INR",
+          "is_waived": true,
+          "conditions": "No annual maintenance charge",
+          "source": "cards"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "is_unknown": true,
+          "conditions": "Standard ATM withdrawal charges apply; the figure is not published",
+          "source": "product"
+        }
+      ],
+      "limits": [],
+      "benefits": [
+        {
+          "benefit_type": "online_application",
+          "description": "Card can be ordered online",
+          "source": "cards"
+        },
+        {
+          "benefit_type": "online_reload",
+          "description": "Card can be reloaded online",
+          "source": "cards"
+        }
+      ],
+      "eligibility": []
+    }
+  ]
+}

@@ -1,0 +1,293 @@
+{
+  "provider": "HDFC Bank",
+  "cards": [
+    {
+      "slug": "hdfc-forexplus-corporate",
+      "card_name": "ForexPlus Card (Corporate)",
+      "card_type": "prepaid_forex",
+      "network": "unknown",
+      "description": "Prepaid forex card issued to employees at the request of a corporate. Not available through a retail application.",
+      "application_url": null,
+      "sources": [
+        {
+          "key": "terms",
+          "url": "https://www.hdfc.bank.in/content/dam/hdfcbankpws/in/en/pdf/Forexplus-card-Issuance-Fees-061012026.pdf",
+          "domain": "hdfc.bank.in",
+          "title": "HDFC Bank ForexPlus Card \u2014 issuance fees and terms",
+          "source_type": "official_terms",
+          "retrieved_at": "2026-09-08",
+          "last_verified_at": "2026-09-08",
+          "notes": "Fee figures extracted directly from the published PDF."
+        }
+      ],
+      "currencies": [
+        {
+          "code": "USD",
+          "direct_wallet": true,
+          "source": "terms"
+        }
+      ],
+      "fees": [
+        {
+          "fee_type": "issuance",
+          "amount": "500",
+          "currency": "INR",
+          "conditions": "Rs.500 + GST",
+          "source": "terms"
+        },
+        {
+          "fee_type": "reload",
+          "amount": "75",
+          "currency": "INR",
+          "conditions": "Rs.75 + GST",
+          "source": "terms"
+        },
+        {
+          "fee_type": "replacement",
+          "amount": "100",
+          "currency": "INR",
+          "conditions": "Reissuance of card fees Rs.100 + GST",
+          "source": "terms"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "2.00",
+          "currency": "USD",
+          "conditions": "US Dollar ATM cash withdrawal",
+          "source": "terms"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "0.50",
+          "currency": "USD",
+          "source": "terms"
+        }
+      ],
+      "limits": [
+        {
+          "limit_type": "daily_atm",
+          "amount": "5000",
+          "currency": "USD",
+          "period": "daily",
+          "source": "terms"
+        }
+      ],
+      "benefits": [],
+      "eligibility": [
+        {
+          "criterion": "existing_relationship",
+          "value": "corporate",
+          "description": "Issued only at the request of an employer; there is no retail application route.",
+          "source": "terms"
+        }
+      ]
+    },
+    {
+      "slug": "hdfc-multicurrency-platinum-forexplus",
+      "card_name": "Multicurrency Platinum ForexPlus Chip Card",
+      "card_type": "multi_currency_forex",
+      "network": "unknown",
+      "description": "Multi-currency prepaid travel card for international spending and ATM use.",
+      "application_url": "https://www.hdfcbank.com/personal/pay/cards/forex-cards/multicurrency-platinum-forexplus-chip-card",
+      "sources": [
+        {
+          "key": "fees",
+          "url": "https://www.hdfcbank.com/personal/pay/cards/forex-cards/multicurrency-platinum-forexplus-chip-card/fees-and-charges",
+          "domain": "hdfcbank.com",
+          "title": "Multicurrency Platinum ForexPlus Chip Card \u2014 fees and charges",
+          "source_type": "official_fee_schedule",
+          "retrieved_at": "2026-09-08",
+          "last_verified_at": "2026-09-08",
+          "notes": "Figures reported by search over this official fees-and-charges page; direct retrieval was refused by the site's bot protection, so this card is flagged for re-verification through the verification pipeline."
+        }
+      ],
+      "currencies": [],
+      "fees": [
+        {
+          "fee_type": "issuance",
+          "amount": "500",
+          "currency": "INR",
+          "conditions": "\u20b9500 plus applicable taxes",
+          "source": "fees"
+        },
+        {
+          "fee_type": "reload",
+          "amount": "75",
+          "currency": "INR",
+          "conditions": "\u20b975 plus applicable taxes",
+          "source": "fees"
+        },
+        {
+          "fee_type": "cross_currency",
+          "percentage": "2.0",
+          "conditions": "2% markup on wallet-to-wallet transfers between currencies held on the card",
+          "source": "fees"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "is_unknown": true,
+          "conditions": "Not established from an official source",
+          "source": "fees"
+        }
+      ],
+      "limits": [],
+      "benefits": [
+        {
+          "benefit_type": "online_management",
+          "description": "Card can be managed online",
+          "source": "fees"
+        }
+      ],
+      "eligibility": []
+    },
+    {
+      "slug": "hdfc-regalia-forexplus",
+      "card_name": "Regalia ForexPlus Card",
+      "card_type": "single_currency_forex",
+      "network": "unknown",
+      "description": "US dollar prepaid forex card with no cross-currency markup when spending in other currencies.",
+      "application_url": "https://www.hdfcbank.com/personal/pay/cards/forex-cards/regalia-forex-plus-card",
+      "sources": [
+        {
+          "key": "fees",
+          "url": "https://www.hdfcbank.com/personal/pay/cards/forex-cards/regalia-forex-plus-card/fees-and-charges",
+          "domain": "hdfcbank.com",
+          "title": "Regalia ForexPlus Card \u2014 fees and charges",
+          "source_type": "official_fee_schedule",
+          "retrieved_at": "2026-09-08",
+          "last_verified_at": "2026-09-08",
+          "notes": "Figures reported by search over this official fees-and-charges page; direct retrieval was refused by the site's bot protection, so this card is flagged for re-verification through the verification pipeline."
+        }
+      ],
+      "currencies": [
+        {
+          "code": "USD",
+          "direct_wallet": true,
+          "source": "fees"
+        }
+      ],
+      "fees": [
+        {
+          "fee_type": "reload",
+          "amount": "75",
+          "currency": "INR",
+          "conditions": "\u20b975 plus applicable GST per reload",
+          "source": "fees"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "4.00",
+          "currency": "USD",
+          "conditions": "USD 4.00 per ATM cash withdrawal",
+          "source": "fees"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "0.50",
+          "currency": "USD",
+          "source": "fees"
+        },
+        {
+          "fee_type": "cross_currency",
+          "amount": "0",
+          "currency": "USD",
+          "is_waived": true,
+          "conditions": "Zero cross-currency markup where the transaction currency differs from the USD held on the card",
+          "source": "fees"
+        },
+        {
+          "fee_type": "issuance",
+          "is_unknown": true,
+          "conditions": "Not established from an official source",
+          "source": "fees"
+        }
+      ],
+      "limits": [],
+      "benefits": [
+        {
+          "benefit_type": "online_management",
+          "description": "Card can be managed online",
+          "source": "fees"
+        }
+      ],
+      "eligibility": []
+    },
+    {
+      "slug": "hdfc-isic-student-forexplus",
+      "card_name": "ISIC Student ForexPlus Card",
+      "card_type": "single_currency_forex",
+      "network": "unknown",
+      "description": "Student prepaid forex card issued with ISIC membership.",
+      "application_url": "https://www.hdfcbank.com/personal/pay/cards/forex-cards/isic-student-forexplus-chip-card",
+      "sources": [
+        {
+          "key": "fees",
+          "url": "https://www.hdfcbank.com/personal/pay/cards/forex-cards/isic-student-forexplus-chip-card/fees-and-charges",
+          "domain": "hdfcbank.com",
+          "title": "ISIC Student ForexPlus Card \u2014 fees and charges",
+          "source_type": "official_fee_schedule",
+          "retrieved_at": "2026-09-08",
+          "last_verified_at": "2026-09-08",
+          "notes": "Figures reported by search over this official fees-and-charges page; direct retrieval was refused by the site's bot protection, so this card is flagged for re-verification through the verification pipeline."
+        }
+      ],
+      "currencies": [
+        {
+          "code": "USD",
+          "direct_wallet": true,
+          "source": "fees"
+        }
+      ],
+      "fees": [
+        {
+          "fee_type": "reload",
+          "amount": "100",
+          "currency": "INR",
+          "conditions": "\u20b9100 plus applicable GST",
+          "source": "fees"
+        },
+        {
+          "fee_type": "atm_withdrawal",
+          "amount": "2.00",
+          "currency": "USD",
+          "conditions": "USD 2 per ATM cash withdrawal",
+          "source": "fees"
+        },
+        {
+          "fee_type": "balance_enquiry",
+          "amount": "0.50",
+          "currency": "USD",
+          "source": "fees"
+        },
+        {
+          "fee_type": "cross_currency",
+          "percentage": "3.0",
+          "conditions": "3% cross-currency markup where the transaction currency differs from the currency on the card",
+          "source": "fees"
+        },
+        {
+          "fee_type": "issuance",
+          "is_unknown": true,
+          "conditions": "Not established from an official source",
+          "source": "fees"
+        }
+      ],
+      "limits": [],
+      "benefits": [
+        {
+          "benefit_type": "travel",
+          "description": "Issued with International Student Identity Card (ISIC) membership",
+          "source": "fees"
+        }
+      ],
+      "eligibility": [
+        {
+          "criterion": "student_only",
+          "value": "student",
+          "description": "Offered to students travelling abroad.",
+          "source": "fees"
+        }
+      ]
+    }
+  ]
+}

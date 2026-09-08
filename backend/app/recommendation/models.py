@@ -165,13 +165,40 @@ class CardFacts(BaseModel):
 
     # --- Lookups ------------------------------------------------------------
 
-    def fee(self, fee_type: FeeType) -> FeeFact | None:
-        """The applicable fee of a type, preferring one with a usable value."""
+    def fee(self, fee_type: FeeType, currency: str | None = None) -> FeeFact | None:
+        """The applicable fee of a type, preferring one with a usable value.
+
+        Providers commonly publish a *different* figure per currency — Axis
+        charges GBP 1.41 but USD 2.25 to withdraw cash — so a lookup without a
+        currency would quietly price the wrong one. Resolution order:
+
+        1. a fee denominated in the requested currency;
+        2. a percentage-only fee, which applies whatever the currency;
+        3. a rupee-denominated fee (issuance and reload are charged in INR);
+        4. the single published figure, if there is exactly one;
+
+        and otherwise ``None`` — meaning "not published for this currency",
+        which the calculator then imputes pessimistically rather than treating
+        as free.
+        """
         matches = [f for f in self.fees if f.fee_type is fee_type]
         if not matches:
             return None
-        known = [f for f in matches if f.is_known]
-        return known[0] if known else matches[0]
+        known = [f for f in matches if f.is_known] or matches
+        if currency is None:
+            return known[0]
+
+        wanted = currency.upper()
+        for candidate in known:
+            if candidate.currency and candidate.currency.upper() == wanted:
+                return candidate
+        for candidate in known:
+            if candidate.currency is None and candidate.percentage is not None:
+                return candidate
+        for candidate in known:
+            if candidate.currency and candidate.currency.upper() == "INR":
+                return candidate
+        return known[0] if len(known) == 1 else None
 
     def currency(self, code: str) -> CurrencyFact | None:
         code = code.upper()

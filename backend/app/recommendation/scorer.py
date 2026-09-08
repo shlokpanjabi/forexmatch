@@ -57,11 +57,19 @@ def score_cost(
     elif breakdown.total_is_lower_bound:
         suffix = " (a lower bound — some charges are unpublished across every card here)"
 
-    delta = own - min_cost
-    if delta == 0:
-        detail = "the cheapest in this comparison"
+    # Phrase this so it reads correctly whether the card leads on cost or not —
+    # "₹7,047 more than the cheapest" must never be presented as a selling point.
+    above_cheapest = own - min_cost
+    below_dearest = max_cost - own
+    if above_cheapest == 0:
+        detail = "the cheapest option in this comparison"
+    elif below_dearest == 0:
+        detail = f"the most expensive here, ₹{above_cheapest:,.0f} above the cheapest"
     else:
-        detail = f"₹{delta:,.0f} more than the cheapest"
+        detail = (
+            f"₹{above_cheapest:,.0f} above the cheapest option "
+            f"and ₹{below_dearest:,.0f} below the most expensive"
+        )
     return _clamp(score), f"Estimated ₹{own:,.0f} over the period — {detail}{suffix}."
 
 
@@ -78,7 +86,7 @@ def score_atm(card: CardFacts, usage: UsageProfile, fx: FXRateTable) -> tuple[fl
     if usage.atm_withdrawals_total == 0:
         return 100.0, "You do not expect to withdraw cash, so ATM charges do not separate these cards."
 
-    fee = card.fee(FeeType.ATM_WITHDRAWAL)
+    fee = card.fee(FeeType.ATM_WITHDRAWAL, currency=usage.spend_currency)
     if fee is None or not fee.is_known:
         return (
             25.0,
@@ -132,6 +140,13 @@ def score_currency(card: CardFacts, profile: UserProfile, usage: UsageProfile) -
     (BUILD.md section 25)."""
     target = usage.spend_currency
     supported_count = len(card.supported_currency_codes)
+
+    if not card.currencies:
+        return (
+            35.0,
+            "This provider's supported-currency list could not be verified, so "
+            f"we cannot confirm it holds {target}.",
+        )
 
     if card.has_direct_wallet(target):
         score = 95.0

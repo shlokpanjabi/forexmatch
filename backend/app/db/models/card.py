@@ -161,7 +161,7 @@ class CardFee(Base):
             name="percentage_in_range",
         ),
         CheckConstraint(
-            "amount IS NOT NULL OR percentage IS NOT NULL OR is_unknown = true",
+            "amount IS NOT NULL OR percentage IS NOT NULL OR is_unknown = true OR is_waived = true",
             name="fee_has_value_or_is_explicitly_unknown",
         ),
         Index("ix_card_fees_card_id_fee_type", "card_id", "fee_type"),
