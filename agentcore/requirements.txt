@@ -1,0 +1,2 @@
+# Installed on top of the backend's own dependencies.
+bedrock-agentcore>=1.22
