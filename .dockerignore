@@ -1,0 +1,33 @@
+# Keep the build context small — without this it drags in the virtualenv, the
+# frontend's node_modules and the whole git history, none of which the image
+# needs.
+
+.git
+.github
+.venv
+venv
+
+frontend
+node_modules
+.next
+out
+
+deploy
+docs
+agentcore
+scripts
+
+backend/tests
+backend/.env
+backend/.venv
+**/__pycache__
+**/*.py[cod]
+.pytest_cache
+.ruff_cache
+.mypy_cache
+
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
