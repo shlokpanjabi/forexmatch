@@ -13,6 +13,7 @@ trigger.
 
 from __future__ import annotations
 
+import asyncio
 import time
 import uuid
 from collections.abc import AsyncIterator, Callable
@@ -77,6 +78,14 @@ class AgentContext:
     on_event: Callable[[ToolEventView], None] | None = None
     profile_dirty: bool = False
 
+    #: Strands runs the tools requested in a single turn concurrently, and an
+    #: AsyncSession is not safe for concurrent use — interleaved flushes lose
+    #: the identity of pending rows, so a tool event gets INSERTed twice and the
+    #: first copy is stranded at "started". Serialising tool bodies keeps every
+    #: database touch on one task at a time. The tools are millisecond-scale, so
+    #: the lost parallelism is not worth the corruption it causes.
+    db_lock: asyncio.Lock = field(default_factory=asyncio.Lock)
+
     def emit(self, event: ToolEventView) -> None:
         if self.on_event is not None:
             self.on_event(event)
@@ -129,6 +138,12 @@ def traced_tool(
         @wraps(func)
         async def wrapper(*args, **kwargs):
             ctx = get_context()
+            # Held across the tool body too, not just the event writes: the tool
+            # itself queries through the same session.
+            async with ctx.db_lock:
+                return await _run_traced(ctx, func, tool_name, args, kwargs)
+
+        async def _run_traced(ctx, func, tool_name, args, kwargs):
             started = datetime.now(UTC)
             clock = time.perf_counter()
 

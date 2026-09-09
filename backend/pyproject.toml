@@ -39,7 +39,12 @@ include = ["app*"]
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 testpaths = ["tests"]
-filterwarnings = ["ignore::DeprecationWarning"]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    # Concurrent use of one AsyncSession corrupted tool_events once already.
+    # SQLAlchemy warns about it; make that warning fail the build.
+    "error::sqlalchemy.exc.SAWarning",
+]
 
 [tool.ruff]
 line-length = 110
