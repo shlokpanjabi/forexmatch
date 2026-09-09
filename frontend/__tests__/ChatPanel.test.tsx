@@ -115,12 +115,38 @@ describe("ChatPanel", () => {
     expect(await screen.findByRole("alert")).toHaveTextContent("The assistant could not finish.");
   });
 
-  it("reports a network failure in plain language", async () => {
+  it("explains an unreachable API rather than showing a raw failure", async () => {
+    // A rejected fetch means the request never arrived — DNS, refused
+    // connection, CORS or mixed content. The page is public, so this needs to
+    // read as an explanation, not a stack trace.
     vi.spyOn(globalThis, "fetch").mockRejectedValue(new TypeError("Failed to fetch"));
     const user = userEvent.setup();
     render(<ChatPanel />);
     await user.click(screen.getByRole("button", { name: /Indian student going to the UK/ }));
 
-    expect(await screen.findByRole("alert")).toHaveTextContent(/Is the backend running/);
+    const alert = await screen.findByRole("alert");
+    expect(alert).toHaveTextContent(/API isn.t reachable/);
+    expect(alert).toHaveTextContent(/not yet publicly hosted/);
+    // Tells the reader how to run it, and where the page is looking.
+    expect(alert).toHaveTextContent("./scripts/dev.sh");
+    expect(alert).toHaveTextContent("http://localhost:8000");
+    expect(screen.getByRole("link", { name: /Source and setup/ })).toHaveAttribute(
+      "href",
+      "https://github.com/shlokpanjabi/forexmatch",
+    );
+  });
+
+  it("keeps an API-reported error distinct from an unreachable API", async () => {
+    mockStream([
+      { type: "session", session_id: "s" },
+      { type: "error", error: { code: "AGENT_FAILED", message: "The assistant could not finish." } },
+    ]);
+    const user = userEvent.setup();
+    render(<ChatPanel />);
+    await user.click(screen.getByRole("button", { name: /Indian student going to the UK/ }));
+
+    const alert = await screen.findByRole("alert");
+    expect(alert).toHaveTextContent("The assistant could not finish.");
+    expect(alert).not.toHaveTextContent(/not yet publicly hosted/);
   });
 });

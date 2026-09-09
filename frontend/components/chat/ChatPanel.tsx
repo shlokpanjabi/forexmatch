@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { ApiRequestError, streamChat } from "@/lib/api";
+import { API_BASE, ApiRequestError, ApiUnreachableError, streamChat } from "@/lib/api";
 import type { ChatMessage, Profile, Recommendation, ToolEvent } from "@/lib/types";
 import { AgentActivity } from "@/components/activity/AgentActivity";
 import { RecommendationPanel } from "@/components/recommendation/RecommendationPanel";
@@ -23,6 +23,7 @@ export function ChatPanel() {
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [apiUnreachable, setApiUnreachable] = useState(false);
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [toolEvents, setToolEvents] = useState<ToolEvent[]>([]);
   const [recommendation, setRecommendation] = useState<Recommendation | null>(null);
@@ -43,6 +44,7 @@ export function ChatPanel() {
       if (!trimmed || busy) return;
 
       setError(null);
+      setApiUnreachable(false);
       setBusy(true);
       setToolEvents([]);
       setInput("");
@@ -102,11 +104,15 @@ export function ChatPanel() {
         }
       } catch (caught) {
         if ((caught as Error)?.name === "AbortError") return;
-        setError(
-          caught instanceof ApiRequestError
-            ? caught.message
-            : "Could not reach the assistant. Is the backend running?",
-        );
+        if (caught instanceof ApiUnreachableError) {
+          setApiUnreachable(true);
+        } else {
+          setError(
+            caught instanceof ApiRequestError
+              ? caught.message
+              : "Something went wrong. Please try again.",
+          );
+        }
       } finally {
         setBusy(false);
         setMessages((current) => current.map((m) => ({ ...m, pending: false })));
@@ -166,6 +172,43 @@ export function ChatPanel() {
 
         {recommendation && (
           <RecommendationPanel recommendation={recommendation} sessionId={sessionId} />
+        )}
+
+        {apiUnreachable && (
+          <div
+            role="alert"
+            className="rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm dark:border-amber-900 dark:bg-amber-950"
+          >
+            <p className="font-medium text-amber-900 dark:text-amber-200">
+              The ForexMatch API isn&apos;t reachable
+            </p>
+            <p className="mt-1 text-amber-800 dark:text-amber-300">
+              This page is deployed, but its backend — the card database, the exchange-rate
+              service and the recommendation engine — is not yet publicly hosted, so the
+              assistant can&apos;t run.
+            </p>
+            <p className="mt-2 text-amber-800 dark:text-amber-300">
+              Running it yourself? Start the API with{" "}
+              <code className="rounded bg-amber-100 px-1 py-0.5 font-mono text-xs dark:bg-amber-900">
+                ./scripts/dev.sh
+              </code>{" "}
+              and reload. This page expects it at{" "}
+              <code className="rounded bg-amber-100 px-1 py-0.5 font-mono text-xs dark:bg-amber-900">
+                {API_BASE}
+              </code>
+              .
+            </p>
+            <p className="mt-2">
+              <a
+                href="https://github.com/shlokpanjabi/forexmatch"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-amber-900 underline underline-offset-2 dark:text-amber-200"
+              >
+                Source and setup instructions
+              </a>
+            </p>
+          </div>
         )}
 
         {error && (

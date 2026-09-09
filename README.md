@@ -256,7 +256,7 @@ Frontend: `NEXT_PUBLIC_API_BASE_URL` (default `http://localhost:8000`).
 ## Testing
 
 ```bash
-cd backend && pytest              # 170 tests
+cd backend && pytest              # 171 tests
 cd frontend && npm test           # 15 tests
 ```
 

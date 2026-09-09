@@ -12,6 +12,14 @@ export class ApiRequestError extends Error {
   }
 }
 
+/** The API could not be reached at all — as opposed to answering with an error. */
+export class ApiUnreachableError extends Error {
+  constructor(public readonly baseUrl: string) {
+    super(`Could not reach the ForexMatch API at ${baseUrl}`);
+    this.name = "ApiUnreachableError";
+  }
+}
+
 async function parseError(response: Response): Promise<never> {
   let code = "REQUEST_FAILED";
   let message = "Something went wrong. Please try again.";
@@ -38,12 +46,21 @@ export async function* streamChat(
   sessionId: string | null,
   signal?: AbortSignal,
 ): AsyncGenerator<StreamEvent> {
-  const response = await fetch(`${API_BASE}/api/chat/stream`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ message, session_id: sessionId }),
-    signal,
-  });
+  let response: Response;
+  try {
+    response = await fetch(`${API_BASE}/api/chat/stream`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message, session_id: sessionId }),
+      signal,
+    });
+  } catch (caught) {
+    // A failed fetch means DNS, connection refused, CORS or mixed content —
+    // the request never reached the API. That is a different problem from the
+    // API rejecting it, and deserves a different message.
+    if ((caught as Error)?.name === "AbortError") throw caught;
+    throw new ApiUnreachableError(API_BASE);
+  }
 
   if (!response.ok) await parseError(response);
   if (!response.body) throw new ApiRequestError("NO_STREAM", "The server sent no response body.");
