@@ -74,16 +74,52 @@ class Settings(BaseSettings):
 
     @field_validator("database_url")
     @classmethod
-    def _require_async_driver(cls, value: str) -> str:
-        """Fail loudly rather than blocking the event loop on a sync driver."""
-        if value.startswith("postgresql://"):
-            return value.replace("postgresql://", "postgresql+asyncpg://", 1)
+    def _normalise_database_url(cls, value: str) -> str:
+        """Accept the URL formats hosting providers actually hand out.
+
+        Managed Postgres providers issue libpq-style URLs — Neon, for instance,
+        gives ``postgres://…?sslmode=require&channel_binding=require``. asyncpg
+        understands neither the ``postgres://`` scheme nor libpq's query
+        parameters, and fails at connect time with an opaque error. Rather than
+        make that a deployment footgun, normalise here:
+
+        * ``postgres://`` and ``postgresql://`` become ``postgresql+asyncpg://``
+        * libpq-only parameters are stripped (TLS is configured in the engine)
+
+        A sync driver is still rejected outright — it would block the event loop.
+        """
+        from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
+
+        for prefix in ("postgres://", "postgresql://"):
+            if value.startswith(prefix):
+                value = "postgresql+asyncpg://" + value[len(prefix) :]
+                break
+
         if not value.startswith("postgresql+asyncpg://"):
             raise ValueError(
-                "DATABASE_URL must be a PostgreSQL URL using the asyncpg driver, "
-                f"e.g. postgresql+asyncpg://localhost:5432/forexmatch (got: {value.split('://')[0]}://…)"
+                "DATABASE_URL must be a PostgreSQL URL, e.g. "
+                f"postgresql+asyncpg://localhost:5432/forexmatch (got: {value.split('://')[0]}://…)"
             )
+
+        parts = urlsplit(value)
+        if parts.query:
+            # asyncpg rejects these outright; they are libpq's, not its own.
+            dropped = {"sslmode", "channel_binding", "options", "target_session_attrs"}
+            kept = [(k, v) for k, v in parse_qsl(parts.query) if k not in dropped]
+            value = urlunsplit(parts._replace(query=urlencode(kept)))
+
         return value
+
+    @property
+    def database_host(self) -> str:
+        from urllib.parse import urlsplit
+
+        return urlsplit(self.database_url).hostname or ""
+
+    @property
+    def database_requires_tls(self) -> bool:
+        """Managed providers require TLS; a local server does not offer it."""
+        return self.database_host not in ("", "localhost", "127.0.0.1", "::1")
 
     @property
     def sync_database_url(self) -> str:

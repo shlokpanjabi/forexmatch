@@ -1,0 +1,9 @@
+# The function does not run migrations or tests — both are deliberate,
+# separate steps (see deploy/README.md).
+tests
+.pytest_cache
+.ruff_cache
+__pycache__
+*.pyc
+.venv
+.env

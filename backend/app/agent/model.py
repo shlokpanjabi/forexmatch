@@ -67,14 +67,21 @@ def build_model(settings: Settings | None = None) -> Model:
 
     from strands.models import BedrockModel
 
+    from app.aws import build_session, uses_web_identity
+
     logger.info(
-        "model.bedrock_selected", model_id=settings.bedrock_model_id, region=settings.aws_region
-    )
-    # Credentials come from the standard boto3 chain — env, ~/.aws, SSO or an
-    # instance role. Nothing secret is read from settings.
-    return BedrockModel(
+        "model.bedrock_selected",
         model_id=settings.bedrock_model_id,
-        region_name=settings.aws_region,
+        region=settings.aws_region,
+        web_identity=uses_web_identity(),
+    )
+    # Credentials come from app.aws — the standard boto3 chain locally, OIDC
+    # federation on Vercel. Nothing secret is read from settings either way.
+    # BedrockModel rejects region_name alongside boto_session, so the region is
+    # carried by the session.
+    return BedrockModel(
+        boto_session=build_session(settings.aws_region),
+        model_id=settings.bedrock_model_id,
         max_tokens=settings.bedrock_max_tokens,
         temperature=settings.bedrock_temperature,
         streaming=settings.bedrock_streaming,

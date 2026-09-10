@@ -1,0 +1,18 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": { "Federated": "arn:aws:iam::812313738942:oidc-provider/oidc.vercel.com/gkyhvjjd4n-7928s-projects" },
+      "Action": "sts:AssumeRoleWithWebIdentity",
+      "Condition": {
+        "StringEquals": {
+          "oidc.vercel.com/gkyhvjjd4n-7928s-projects:aud": "https://vercel.com/gkyhvjjd4n-7928s-projects"
+        },
+        "StringLike": {
+          "oidc.vercel.com/gkyhvjjd4n-7928s-projects:sub": "owner:gkyhvjjd4n-7928s-projects:project:forexmatch-api:environment:*"
+        }
+      }
+    }
+  ]
+}

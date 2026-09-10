@@ -2,7 +2,7 @@
 name = "forexmatch-backend"
 version = "0.1.0"
 description = "ForexMatch — AI agent that researches and recommends forex cards for Indian students"
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 dependencies = [
     "fastapi>=0.115",
     "uvicorn[standard]>=0.32",
@@ -28,6 +28,12 @@ dev = [
 ]
 analytics = ["posthog>=3.7"]
 monitoring = ["sentry-sdk>=2.19"]
+
+[tool.vercel]
+# Vercel loads this module attribute as the function handler. The same
+# `app.main:app` that uvicorn runs locally, so there is no separate serverless
+# entrypoint to keep in step.
+entrypoint = "app.main:app"
 
 [build-system]
 requires = ["setuptools>=68"]

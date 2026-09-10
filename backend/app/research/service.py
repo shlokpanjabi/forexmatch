@@ -99,9 +99,9 @@ class ResearchService:
 
     def _bedrock(self) -> Any:
         if self._client is None:
-            import boto3
+            from app.aws import build_session
 
-            self._client = boto3.client("bedrock-runtime", region_name=self._settings.aws_region)
+            self._client = build_session(self._settings.aws_region).client("bedrock-runtime")
         return self._client
 
     async def search(self, provider: str, card_name: str, topic: str) -> ResearchResult:
