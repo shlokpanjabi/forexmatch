@@ -67,13 +67,14 @@ def build_model(settings: Settings | None = None) -> Model:
 
     from strands.models import BedrockModel
 
-    from app.aws import build_session, uses_web_identity
+    from app.aws import build_session, credential_diagnostics, uses_web_identity
 
     logger.info(
         "model.bedrock_selected",
         model_id=settings.bedrock_model_id,
         region=settings.aws_region,
         web_identity=uses_web_identity(),
+        **({} if uses_web_identity() else credential_diagnostics()),
     )
     # Credentials come from app.aws — the standard boto3 chain locally, OIDC
     # federation on Vercel. Nothing secret is read from settings either way.

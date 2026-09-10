@@ -12,6 +12,7 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.analytics import get_analytics
+from app.aws import OIDC_HEADER, reset_request_oidc_token, set_request_oidc_token
 from app.api import admin, analytics, cards, chat, recommendations
 from app.config import get_settings
 from app.db.session import dispose_engine
@@ -72,11 +73,16 @@ def create_app() -> FastAPI:
     @app.middleware("http")
     async def request_context(request: Request, call_next) -> Any:
         token = request_id_var.set(new_request_id())
+        # On Vercel the OIDC token arrives per request rather than in the
+        # environment, so it has to be captured here for anything that later
+        # needs AWS credentials.
+        oidc = set_request_oidc_token(request.headers.get(OIDC_HEADER))
         started = time.perf_counter()
         try:
             response = await call_next(request)
         finally:
             duration = int((time.perf_counter() - started) * 1000)
+            reset_request_oidc_token(oidc)
             request_id_var.reset(token)
         # Streaming responses report their setup time, not their full duration.
         logger.info(
