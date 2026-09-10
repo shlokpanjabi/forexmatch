@@ -11,21 +11,44 @@ export interface Destination {
   country: string;
   currency: string;
   symbol: string;
+  /**
+   * Monthly spend band edges in the local currency, as [min, max]. The last
+   * band is open-ended.
+   *
+   * These are rough guides so the options land near what a student in that
+   * country would actually recognise — £600 and AED 600 are not the same
+   * question. They are not a claim about cost of living: the user picks the
+   * band that matches them, so the resulting figure is their statement, and it
+   * is recorded as an estimate either way.
+   */
+  bands: Array<[number, number]>;
 }
 
 export const DESTINATIONS: Destination[] = [
-  { id: "uk", country: "United Kingdom", currency: "GBP", symbol: "£" },
-  { id: "us", country: "United States", currency: "USD", symbol: "$" },
-  { id: "ca", country: "Canada", currency: "CAD", symbol: "C$" },
-  { id: "au", country: "Australia", currency: "AUD", symbol: "A$" },
-  { id: "de", country: "Germany", currency: "EUR", symbol: "€" },
-  { id: "ie", country: "Ireland", currency: "EUR", symbol: "€" },
-  { id: "nl", country: "Netherlands", currency: "EUR", symbol: "€" },
-  { id: "fr", country: "France", currency: "EUR", symbol: "€" },
-  { id: "sg", country: "Singapore", currency: "SGD", symbol: "S$" },
-  { id: "ae", country: "United Arab Emirates", currency: "AED", symbol: "AED " },
-  { id: "nz", country: "New Zealand", currency: "NZD", symbol: "NZ$" },
-  { id: "ch", country: "Switzerland", currency: "CHF", symbol: "CHF " },
+  { id: "uk", country: "United Kingdom", currency: "GBP", symbol: "£",
+    bands: [[350, 600], [600, 900], [900, 1300], [1300, 1800], [1800, 2600]] },
+  { id: "us", country: "United States", currency: "USD", symbol: "$",
+    bands: [[500, 800], [800, 1200], [1200, 1800], [1800, 2500], [2500, 3500]] },
+  { id: "ca", country: "Canada", currency: "CAD", symbol: "C$",
+    bands: [[700, 1000], [1000, 1500], [1500, 2000], [2000, 2800], [2800, 3800]] },
+  { id: "au", country: "Australia", currency: "AUD", symbol: "A$",
+    bands: [[800, 1200], [1200, 1800], [1800, 2400], [2400, 3200], [3200, 4400]] },
+  { id: "de", country: "Germany", currency: "EUR", symbol: "€",
+    bands: [[400, 700], [700, 1000], [1000, 1400], [1400, 1900], [1900, 2600]] },
+  { id: "ie", country: "Ireland", currency: "EUR", symbol: "€",
+    bands: [[600, 900], [900, 1300], [1300, 1800], [1800, 2400], [2400, 3200]] },
+  { id: "nl", country: "Netherlands", currency: "EUR", symbol: "€",
+    bands: [[600, 900], [900, 1250], [1250, 1700], [1700, 2300], [2300, 3100]] },
+  { id: "fr", country: "France", currency: "EUR", symbol: "€",
+    bands: [[500, 800], [800, 1150], [1150, 1600], [1600, 2200], [2200, 3000]] },
+  { id: "sg", country: "Singapore", currency: "SGD", symbol: "S$",
+    bands: [[700, 1000], [1000, 1500], [1500, 2100], [2100, 2900], [2900, 4000]] },
+  { id: "ae", country: "United Arab Emirates", currency: "AED", symbol: "AED ",
+    bands: [[1800, 2800], [2800, 4200], [4200, 6000], [6000, 8500], [8500, 12000]] },
+  { id: "nz", country: "New Zealand", currency: "NZD", symbol: "NZ$",
+    bands: [[800, 1200], [1200, 1800], [1800, 2400], [2400, 3200], [3200, 4400]] },
+  { id: "ch", country: "Switzerland", currency: "CHF", symbol: "CHF ",
+    bands: [[1100, 1600], [1600, 2200], [2200, 3000], [3000, 4000], [4000, 5500]] },
 ];
 
 export interface Choice {
@@ -41,21 +64,65 @@ export const DURATIONS: Choice[] = [
   { value: "36", label: "Three years or more", hint: "Undergraduate or PhD" },
 ];
 
-/** Bands in the destination currency. "Not sure" is a first-class answer. */
-export const SPEND_BANDS: Array<Choice & { min: number | null; max: number | null }> = [
-  { value: "low", label: "Under 600", min: 300, max: 600, hint: "Halls, cooking at home" },
-  { value: "mid", label: "600 – 1,000", min: 600, max: 1000 },
-  { value: "high", label: "1,000 – 1,500", min: 1000, max: 1500, hint: "Typical for a city" },
-  { value: "higher", label: "1,500 – 2,500", min: 1500, max: 2500 },
-  { value: "top", label: "Over 2,500", min: 2500, max: 3500 },
-  {
+export interface SpendBand extends Choice {
+  min: number;
+  max: number;
+}
+
+const BAND_HINTS = [
+  "Halls, cooking at home",
+  "Modest, shared housing",
+  "Typical for a city",
+  "Comfortable, eating out",
+  "Central, few compromises",
+];
+
+function money(symbol: string, amount: number): string {
+  return `${symbol}${amount.toLocaleString("en-GB")}`;
+}
+
+/**
+ * Spend options for a destination.
+ *
+ * "I'm not sure" is a first-class answer, not a cop-out: it spans the two
+ * middle bands and is recorded with lower confidence, so the estimate the
+ * engine works from is honest about how it was arrived at.
+ */
+export function spendBandsFor(destination: Destination | undefined): SpendBand[] {
+  const bands = destination?.bands ?? [
+    [500, 800],
+    [800, 1200],
+    [1200, 1800],
+    [1800, 2500],
+    [2500, 3500],
+  ];
+  const symbol = destination?.symbol ?? "";
+
+  const options: SpendBand[] = bands.map(([min, max], i) => ({
+    value: `band-${i}`,
+    label:
+      i === 0
+        ? `Under ${money(symbol, max)}`
+        : i === bands.length - 1
+          ? `Over ${money(symbol, min)}`
+          : `${money(symbol, min)} – ${money(symbol, max)}`,
+    hint: BAND_HINTS[i],
+    min,
+    max,
+  }));
+
+  const lower = bands[1] ?? bands[0];
+  const upper = bands[2] ?? bands[bands.length - 1];
+  options.push({
     value: "unsure",
     label: "I'm not sure yet",
-    min: 800,
-    max: 1500,
-    hint: "We'll use a range and say so",
-  },
-];
+    hint: `We'll assume ${money(symbol, lower[0])}–${money(symbol, upper[1])} and say so`,
+    min: lower[0],
+    max: upper[1],
+  });
+
+  return options;
+}
 
 export const ATM_USAGE: Choice[] = [
   { value: "none", label: "Never", hint: "Card everywhere" },
@@ -106,7 +173,7 @@ export const PRIORITIES: Array<Choice & { weights: Record<string, number> }> = [
 export interface Answers {
   destination?: Destination;
   duration?: string;
-  spend?: (typeof SPEND_BANDS)[number];
+  spend?: SpendBand;
   atm?: string;
   spread?: string;
   priority?: (typeof PRIORITIES)[number];

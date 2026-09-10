@@ -12,10 +12,10 @@ import {
   DESTINATIONS,
   DURATIONS,
   PRIORITIES,
-  SPEND_BANDS,
   TOTAL_STEPS,
   type Answers,
   type Destination,
+  spendBandsFor,
   toProfile,
 } from "./questions";
 
@@ -74,8 +74,6 @@ export function Wizard() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [sessionId] = useState(newSessionId);
-
-  const symbol = answers.destination?.symbol ?? "";
 
   const submit = useCallback(
     async (finalAnswers: Answers) => {
@@ -150,13 +148,15 @@ export function Wizard() {
       {
         eyebrow: "Spending",
         question: "Roughly how much a month?",
-        note: "An estimate is fine. We keep it as a range and never pretend it's exact.",
+        note: answers.destination
+          ? `Rough ranges for ${answers.destination.country}. An estimate is fine — we keep it as a range and never pretend it's exact.`
+          : "An estimate is fine. We keep it as a range and never pretend it's exact.",
         body: (
           <div className="grid gap-3 sm:grid-cols-2">
-            {SPEND_BANDS.map((band) => (
+            {spendBandsFor(answers.destination).map((band) => (
               <Option
                 key={band.value}
-                label={band.value === "unsure" ? band.label : `${symbol}${band.label}`}
+                label={band.label}
                 hint={band.hint}
                 selected={answers.spend?.value === band.value}
                 onSelect={() => choose({ spend: band })}
@@ -219,7 +219,7 @@ export function Wizard() {
         ),
       },
     ],
-    [answers, choose, symbol],
+    [answers, choose],
   );
 
   if (result) {
