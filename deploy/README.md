@@ -1,5 +1,16 @@
 # Deploying ForexMatch
 
+> **Live deployment.** ForexMatch runs on Vercel:
+> frontend at **https://forexmatch.vercel.app**, API at
+> **https://forexmatch-api.vercel.app**, PostgreSQL on **Neon**, model on
+> **Amazon Bedrock** via OIDC federation.
+>
+> The App Runner walkthrough below is kept because it is a working recipe, but
+> it is **not** what is deployed — this AWS account never activated App Runner
+> (`SubscriptionRequiredException` in every region, while Bedrock, ECR, RDS and
+> Secrets Manager all worked). For the deployment that actually runs, see
+> [Vercel deployment](#vercel-deployment) at the end of this file.
+
 Frontend on **Vercel**, backend on **AWS App Runner**, database on **Amazon RDS
 for PostgreSQL**, model on **Amazon Bedrock**.
 
@@ -407,3 +418,97 @@ are App Runner and Lightsail Containers.
 
 **CORS errors in the browser** — `CORS_ORIGINS` must contain the exact Vercel
 origin including the scheme and no trailing slash.
+
+
+---
+
+# Vercel deployment
+
+This is what is live. Frontend and API are two Vercel projects; the database is
+Neon; Bedrock is reached with no long-lived credentials.
+
+## Why not App Runner
+
+Vercel serves HTTPS, so the API must too, and an HTTPS certificate needs a
+domain you own — unless the platform provides a managed one. App Runner would
+have, but the account was never activated for it. Vercel's Python runtime runs
+FastAPI as ASGI natively with streaming enabled by default, which keeps the live
+tool-activity feed working, so the API moved there instead.
+
+## Layout
+
+| Piece | Where | Notes |
+| --- | --- | --- |
+| Frontend | Vercel project `forexmatch`, root `frontend/` | Next.js |
+| API | Vercel project `forexmatch-api`, root `backend/` | FastAPI as a Python Function |
+| Database | Neon, via the Vercel marketplace integration | `DATABASE_URL` injected automatically |
+| Model | Amazon Bedrock | Reached by OIDC federation — no stored keys |
+
+## Credentials
+
+No AWS access key exists anywhere in this deployment. The function federates:
+
+1. Vercel signs a short-lived token identifying the deployment.
+2. The function exchanges it for temporary credentials with
+   `AssumeRoleWithWebIdentity`.
+3. The role permits `bedrock:InvokeModel` and
+   `bedrock:InvokeModelWithResponseStream` on Anthropic models, and nothing else.
+
+**The token is delivered differently depending on where the code runs** —
+`VERCEL_OIDC_TOKEN` in builds and local development, but a per-request
+`x-vercel-oidc-token` header inside a Function. Middleware captures the header;
+it cannot be read at module level.
+
+Trust policy in [`iam/vercel-oidc-trust.json`](iam/vercel-oidc-trust.json),
+permissions in [`iam/vercel-bedrock-policy.json`](iam/vercel-bedrock-policy.json).
+
+## Serverless database access
+
+Three adjustments, all in `app/config.py` and `app/db/session.py`:
+
+* **No connection pool.** Function instances come and go; pooled sockets
+  exhaust Postgres's connection limit. `NullPool` on Vercel, pooling left to
+  Neon's own pooler.
+* **No implicit prepared statements.** PgBouncer in transaction mode cannot
+  support them, and without disabling them every query fails once connections
+  are reused.
+* **URL normalisation.** Neon issues
+  `postgres://…?sslmode=require&channel_binding=require`; asyncpg understands
+  neither the scheme nor libpq's parameters. Both are handled and TLS is
+  requested explicitly.
+
+## Deploying a change
+
+```bash
+cd backend  && vercel deploy --prod   # API
+cd frontend && vercel deploy --prod   # frontend
+```
+
+Migrations stay a deliberate, separate step, run against Neon's **unpooled**
+endpoint because DDL through a transaction pooler is unreliable:
+
+```bash
+cd backend
+export DATABASE_URL="$(grep '^DATABASE_URL_UNPOOLED=' .env.local | cut -d= -f2- | tr -d '"')"
+alembic upgrade head && python scripts/seed_cards.py
+```
+
+## Verifying
+
+```bash
+./deploy/smoke-test.sh https://forexmatch-api.vercel.app
+```
+
+23 checks, all passing against production.
+
+## Troubleshooting
+
+**`NoCredentialsError` on a Bedrock call** — the OIDC token is not reaching the
+function. The logged diagnostics report `has_oidc_token` and `token_source`;
+if the source is empty, the `x-vercel-oidc-token` header is not being captured.
+
+**`prepared statement "__asyncpg_stmt_x__" already exists`** — the pooled Neon
+endpoint is being used without prepared statements disabled.
+
+**CORS failures in the browser** — `CORS_ORIGINS` on the API project must name
+the frontend origin exactly, scheme included, no trailing slash.

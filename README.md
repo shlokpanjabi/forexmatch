@@ -1,5 +1,10 @@
 # ForexMatch
 
+**Live:** [forexmatch.vercel.app](https://forexmatch.vercel.app) ·
+API [forexmatch-api.vercel.app](https://forexmatch-api.vercel.app) ·
+[how it works](https://forexmatch.vercel.app/about)
+
+
 **An AI agent that researches and recommends the best forex card for an Indian
 student, based on where they're going, how they'll spend, and what they care
 about.**
