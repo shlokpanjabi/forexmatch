@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getCards } from "@/lib/catalogue";
 import { Footer } from "@/components/site/Footer";
 import { Nav } from "@/components/site/Nav";
+import { CardArt } from "@/components/ui/CardArt";
 import { Card, Label, LinkButton, Pill } from "@/components/ui/primitives";
 
 export const revalidate = 3600;
@@ -63,7 +64,19 @@ export default async function CardsPage() {
                     .filter((c) => c.provider === provider)
                     .map((card) => (
                       <Link key={card.id} href={`/cards/${card.slug}`} className="group">
-                        <Card className="h-full p-5 transition group-hover:border-ink-600">
+                        <Card className="h-full overflow-hidden transition group-hover:border-ink-600">
+                          <div className="relative">
+                            <CardArt
+                              slug={card.slug}
+                              currencies={card.supported_currencies}
+                              className="block w-full"
+                            />
+                            <div
+                              aria-hidden
+                              className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-ink-900 to-transparent"
+                            />
+                          </div>
+                          <div className="p-5">
                           <div className="flex items-start justify-between gap-3">
                             <h3 className="text-base font-medium leading-snug text-mist-50">
                               {card.card_name}
@@ -89,6 +102,7 @@ export default async function CardsPage() {
                                 Currency list unverified
                               </p>
                             )}
+                          </div>
                           </div>
                         </Card>
                       </Link>

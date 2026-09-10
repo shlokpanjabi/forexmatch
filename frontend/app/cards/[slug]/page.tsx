@@ -5,6 +5,7 @@ import { getCard, getCards } from "@/lib/catalogue";
 import type { Fee } from "@/lib/types";
 import { Footer } from "@/components/site/Footer";
 import { Nav } from "@/components/site/Nav";
+import { CardArt } from "@/components/ui/CardArt";
 import { Card, Label, LinkButton, Pill } from "@/components/ui/primitives";
 
 export const revalidate = 3600;
@@ -88,10 +89,19 @@ export default async function CardPage({ params }: { params: Promise<{ slug: str
           {!card.currency_support_verified && <Pill tone="caution">Currencies unverified</Pill>}
         </div>
 
-        <h1 className="display mt-4 text-4xl sm:text-5xl">{card.card_name}</h1>
-        {card.description && (
-          <p className="mt-4 max-w-2xl leading-relaxed text-mist-400">{card.description}</p>
-        )}
+        <div className="mt-4 grid gap-8 sm:grid-cols-[1fr_260px] sm:items-start">
+          <div>
+            <h1 className="display text-4xl sm:text-5xl">{card.card_name}</h1>
+            {card.description && (
+              <p className="mt-4 max-w-xl leading-relaxed text-mist-400">{card.description}</p>
+            )}
+          </div>
+          <CardArt
+            slug={card.slug}
+            currencies={card.currencies.filter((c) => c.direct_wallet).map((c) => c.code)}
+            className="w-full rounded-xl"
+          />
+        </div>
 
         {unknownCount > 0 && (
           <p className="mt-6 rounded-lg border border-amber-400/30 bg-amber-400/5 p-4 text-sm leading-relaxed text-amber-400">

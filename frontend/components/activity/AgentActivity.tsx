@@ -56,11 +56,13 @@ export function AgentActivity({ events }: { events: ToolEvent[] }) {
       className="rounded-[--radius-card] border border-ink-800 bg-ink-900/60 p-4"
     >
       <Label>What the agent is doing</Label>
-      <ol className="mt-3 space-y-2">
+      <ol className="relative mt-4 space-y-3 before:absolute before:bottom-3 before:left-[5px] before:top-2 before:w-px before:bg-ink-700">
         {events.map((event) => (
-          <li key={event.id} className="flex gap-2.5">
-            <Icon status={event.status} />
-            <div className="min-w-0 flex-1">
+          <li key={event.id} className="relative flex gap-3">
+            <span className="relative z-10 bg-ink-900/60">
+              <Icon status={event.status} />
+            </span>
+            <div className="min-w-0 flex-1 pb-0.5">
               <span className="text-sm text-mist-200">
                 {TOOL_LABELS[event.tool_name] ?? event.tool_name.replace(/_/g, " ")}
               </span>

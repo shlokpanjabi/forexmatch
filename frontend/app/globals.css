@@ -15,18 +15,18 @@
 
 @theme {
   /* Surfaces — warm near-black rather than neutral grey */
-  --color-ink-950: #0a0708;
-  --color-ink-900: #100c0e;
-  --color-ink-850: #161013;
-  --color-ink-800: #1d1519;
-  --color-ink-700: #2a1f24;
-  --color-ink-600: #3a2c31;
+  --color-ink-950: #0b0708;
+  --color-ink-900: #130e10;
+  --color-ink-850: #191214;
+  --color-ink-800: #221a1d;
+  --color-ink-700: #31252a;
+  --color-ink-600: #453338;
 
   /* Text */
-  --color-mist-50: #f8f4f3;
-  --color-mist-200: #cdc3c5;
-  --color-mist-400: #9a8d91;
-  --color-mist-500: #948589;
+  --color-mist-50: #faf6f2;
+  --color-mist-200: #d6cac4;
+  --color-mist-400: #a2938d;
+  --color-mist-500: #9b8b85;
 
   /* Accent — vermillion */
   --color-ember-700: #8e1a13;
@@ -40,7 +40,10 @@
   --color-jade-400: #4fb783;
   --color-amber-400: #e0a33a;
 
-  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  /* Editorial pairing: a high-contrast serif for display against a plain
+     grotesque for reading. Deliberately not the compressed uppercase sans that
+     technical comparison tools reach for. */
+  --font-display: var(--font-instrument-serif), ui-serif, Georgia, serif;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
 
@@ -84,9 +87,34 @@ body {
 
 .display {
   font-family: var(--font-display);
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  line-height: 0.95;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+}
+
+/* An italic serif phrase inside a display line — the one flourish, used to
+   carry the emphasis the accent colour used to have to do alone. */
+.display em {
+  font-style: italic;
+  color: var(--color-ember-400);
+}
+
+/* Fine detailing: a hairline that fades out, used to close sections without
+   the hard edge of a full-width border. */
+.rule {
+  height: 1px;
+  background: linear-gradient(90deg, var(--color-ink-700) 0%, transparent 100%);
+}
+
+/* Paper grain. Very low opacity — it should register as texture, not pattern. */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 /* Figures line up in tables and comparisons. */

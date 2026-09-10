@@ -57,7 +57,7 @@ describe("ChatPanel", () => {
     await user.type(screen.getByLabelText("Message"), "hello");
     await user.click(screen.getByRole("button", { name: "Send" }));
 
-    expect(await screen.findByText("Thinking…")).toBeInTheDocument();
+    expect(await screen.findByText(/Reading the fee schedules/)).toBeInTheDocument();
     expect(screen.getByLabelText("Message")).toBeDisabled();
 
     release(new Response(sseBody(FULL_TURN), { status: 200 }));

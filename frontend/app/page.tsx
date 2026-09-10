@@ -70,12 +70,8 @@ export default async function Home() {
           <div className="relative z-10 mx-auto max-w-6xl px-5 pb-20 pt-16 sm:pt-24">
             <Label>For Indian students going abroad</Label>
 
-            <h1 className="display mt-5 text-5xl sm:text-7xl lg:text-8xl">
-              The forex card
-              <br />
-              that actually
-              <br />
-              <span className="text-ember-500">fits your year.</span>
+            <h1 className="display mt-5 max-w-4xl text-5xl leading-[1.05] sm:text-7xl lg:text-[5.5rem]">
+              The forex card that actually <em>fits your year</em>.
             </h1>
 
             <p className="mt-7 max-w-xl text-lg leading-relaxed text-mist-200">
@@ -109,19 +105,19 @@ export default async function Home() {
         <section className="mx-auto max-w-6xl px-5 py-20">
           <Label>Why trust this</Label>
           <h2 className="display mt-4 max-w-2xl text-4xl sm:text-5xl">
-            Most comparison sites rank by commission. This one can&apos;t.
+Most comparison sites rank by commission. <em>This one can&apos;t.</em>
           </h2>
 
           <div className="mt-12 grid gap-5 md:grid-cols-3">
             <Card className="p-6">
-              <p className="display text-xl text-ember-400">Unknown is never zero</p>
+              <p className="display text-2xl">Unknown is never zero</p>
               <p className="mt-3 text-sm leading-relaxed text-mist-400">
                 When a provider won&apos;t publish a charge, we substitute the highest fee among the
                 cards being compared and label it. A quiet issuer never gets to look cheap.
               </p>
             </Card>
             <Card className="p-6">
-              <p className="display text-xl text-ember-400">The maths is code, not a model</p>
+              <p className="display text-2xl">The maths is code, not a model</p>
               <p className="mt-3 text-sm leading-relaxed text-mist-400">
                 A language model runs the conversation. It cannot choose the winner, reorder results
                 or adjust a score — a deterministic engine does that, so the same inputs always give
@@ -129,7 +125,7 @@ export default async function Home() {
               </p>
             </Card>
             <Card className="p-6">
-              <p className="display text-xl text-ember-400">Every figure has a receipt</p>
+              <p className="display text-2xl">Every figure has a receipt</p>
               <p className="mt-3 text-sm leading-relaxed text-mist-400">
                 Each fee links to the provider&apos;s own fee schedule and the date it was verified.
                 Nothing is recalled from memory or estimated to fill a gap.
@@ -142,7 +138,9 @@ export default async function Home() {
         <section className="border-y border-ink-800 bg-ink-900/40">
           <div className="mx-auto max-w-6xl px-5 py-20">
             <Label>How it works</Label>
-            <h2 className="display mt-4 text-4xl sm:text-5xl">Four steps, all of them visible.</h2>
+            <h2 className="display mt-4 text-4xl sm:text-5xl">
+              Four steps, <em>all of them visible</em>.
+            </h2>
 
             <ol className="mt-12 grid gap-px overflow-hidden rounded-[--radius-card] border border-ink-800 bg-ink-800 md:grid-cols-2">
               {STEPS.map((step) => (
@@ -162,7 +160,9 @@ export default async function Home() {
         {/* --------------------------------------------------------- faq */}
         <section className="mx-auto max-w-3xl px-5 py-20">
           <Label>Questions</Label>
-          <h2 className="display mt-4 text-4xl sm:text-5xl">The things worth asking.</h2>
+          <h2 className="display mt-4 text-4xl sm:text-5xl">
+            The things <em>worth asking</em>.
+          </h2>
 
           <div className="mt-10 divide-y divide-ink-800 border-y border-ink-800">
             {FAQ.map((item) => (
@@ -195,7 +195,7 @@ export default async function Home() {
             />
             <div className="relative">
               <h2 className="display mx-auto max-w-2xl text-4xl sm:text-5xl">
-                Find out what your year abroad actually costs.
+                Find out what your year abroad <em>actually costs</em>.
               </h2>
               <p className="mx-auto mt-4 max-w-md text-mist-400">
                 No login, no email, no commission. Just the numbers and where they came from.

@@ -5,6 +5,7 @@ import { useState } from "react";
 import { track } from "@/lib/analytics";
 import { resolveApplicationUrl } from "@/lib/api";
 import type { CardEvaluation, Recommendation } from "@/lib/types";
+import { CardArt } from "@/components/ui/CardArt";
 import { Button, Card, Label, Pill } from "@/components/ui/primitives";
 
 const inr = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 });
@@ -190,15 +191,20 @@ function Winner({
           </p>
         )}
 
-        <div className="mt-5 flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <Label>{card.provider}</Label>
-            <h2 className="display mt-1.5 text-3xl sm:text-4xl">{card.card_name}</h2>
+        {/* The artwork is decorative, so it drops away on narrow screens while
+            the score stays put — one element, not a responsive duplicate. */}
+        <div className="mt-5 grid gap-6 sm:grid-cols-[1fr_170px] sm:items-center">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <Label>{card.provider}</Label>
+              <h2 className="display mt-1.5 text-3xl sm:text-4xl">{card.card_name}</h2>
+            </div>
+            <div className="text-right">
+              <p className="display tnum text-4xl text-ember-400">{evaluation.match_score}%</p>
+              <p className="label mt-0.5">match</p>
+            </div>
           </div>
-          <div className="text-right">
-            <p className="display tnum text-4xl text-ember-400">{evaluation.match_score}%</p>
-            <p className="label mt-0.5">match</p>
-          </div>
+          <CardArt slug={card.slug} compact className="hidden w-full rounded-lg sm:block" />
         </div>
 
         <div className="mt-7 grid gap-4 border-y border-ink-800 py-6 sm:grid-cols-2">
