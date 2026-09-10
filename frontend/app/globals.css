@@ -122,6 +122,38 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
+/* Hero cards drift very slightly out of phase with each other, so the stack
+   reads as suspended rather than pasted down. */
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0);
+  }
+}
+
+.drift {
+  animation: drift 7s ease-in-out infinite;
+}
+
+@keyframes sheen {
+  0% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.75;
+  }
+  100% {
+    opacity: 0.35;
+  }
+}
+
+.sheen {
+  animation: sheen 6s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

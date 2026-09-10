@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { getCatalogueStats } from "@/lib/catalogue";
 import { Footer } from "@/components/site/Footer";
+import { HeroVisual } from "@/components/site/HeroVisual";
 import { Nav } from "@/components/site/Nav";
 import { Card, Label, LinkButton, Stat } from "@/components/ui/primitives";
 
@@ -67,32 +68,38 @@ export default async function Home() {
       <main className="relative">
         {/* ---------------------------------------------------------- hero */}
         <section className="ember-wash relative overflow-hidden">
-          <div className="relative z-10 mx-auto max-w-6xl px-5 pb-20 pt-16 sm:pt-24">
-            <Label>For Indian students going abroad</Label>
+          <div className="relative z-10 mx-auto max-w-6xl px-5 pb-20 pt-16 sm:pt-20">
+            <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_1fr]">
+              <div>
+                <Label>For Indian students going abroad</Label>
 
-            <h1 className="display mt-5 max-w-4xl text-5xl leading-[1.05] sm:text-7xl lg:text-[5.5rem]">
-              The forex card that actually <em>fits your year</em>.
-            </h1>
+                <h1 className="display mt-5 text-5xl leading-[1.03] sm:text-6xl lg:text-7xl">
+                  The forex card that actually <em>fits your year</em>.
+                </h1>
 
-            <p className="mt-7 max-w-xl text-lg leading-relaxed text-mist-200">
-              Tell us where you&apos;re going and how you&apos;ll spend. An agent researches the
-              cards, prices them against your real usage, and shows every figure it used.
-            </p>
+                <p className="mt-7 max-w-lg text-lg leading-relaxed text-mist-200">
+                  Tell us where you&apos;re going and how you&apos;ll spend. An agent researches the
+                  cards, prices them against your real usage, and shows every figure it used.
+                </p>
 
-            <div className="mt-9 flex flex-wrap items-center gap-3">
-              <LinkButton href="/pick" size="lg">
-                Find my card →
-              </LinkButton>
-              <LinkButton href="/chat" variant="secondary" size="lg">
-                Or just describe your plans
-              </LinkButton>
+                <div className="mt-9 flex flex-wrap items-center gap-3">
+                  <LinkButton href="/pick" size="lg">
+                    Find my card →
+                  </LinkButton>
+                  <LinkButton href="/chat" variant="secondary" size="lg">
+                    Or just describe your plans
+                  </LinkButton>
+                </div>
+
+                <p className="mt-4 font-mono text-[11px] uppercase tracking-widest text-mist-500">
+                  About 60 seconds · No login · No commissions
+                </p>
+              </div>
+
+              <HeroVisual />
             </div>
 
-            <p className="mt-4 font-mono text-[11px] uppercase tracking-widest text-mist-500">
-              About 60 seconds · No login · No commissions
-            </p>
-
-            <div className="mt-16 grid max-w-3xl grid-cols-2 gap-8 border-t border-ink-800 pt-8 sm:grid-cols-4">
+            <div className="mt-16 grid grid-cols-2 gap-8 border-t border-ink-800 pt-8 sm:grid-cols-4">
               <Stat value={String(stats.cards)} label="Cards priced" />
               <Stat value={String(stats.providers)} label="Providers" />
               <Stat value={`${stats.currencies}+`} label="Currencies" />
