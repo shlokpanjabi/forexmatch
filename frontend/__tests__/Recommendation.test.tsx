@@ -2,15 +2,15 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
-import { RecommendationPanel } from "@/components/recommendation/RecommendationPanel";
+import { Results } from "@/components/results/Results";
 import { ProfileSummary } from "@/components/chat/ProfileSummary";
 import type { Profile } from "@/lib/types";
 import { evaluation, recommendation } from "./fixtures";
 
-describe("RecommendationPanel", () => {
+describe("Results", () => {
   it("labels a substituted figure rather than presenting it as published", async () => {
-    render(<RecommendationPanel recommendation={recommendation()} sessionId="s" />);
-    await userEvent.click(screen.getByText("Show the full cost calculation"));
+    render(<Results recommendation={recommendation()} sessionId="s" />);
+    await userEvent.click(screen.getByText(/See the full calculation/));
 
     expect(screen.getByText(/instead of assuming it is free/)).toBeInTheDocument();
   });
@@ -19,45 +19,46 @@ describe("RecommendationPanel", () => {
     const unverified = evaluation();
     unverified.card.currency_support_verified = false;
     render(
-      <RecommendationPanel
+      <Results
         recommendation={recommendation({ recommended_card: unverified })}
         sessionId="s"
       />,
     );
-    expect(screen.getByText(/could not verify which currencies/)).toBeInTheDocument();
+    expect(screen.getByText(/Currencies unverified/)).toBeInTheDocument();
   });
 
   it("flags cards that are effectively tied", () => {
     const alternative = evaluation();
     alternative.card = { ...alternative.card, id: "card-2", card_name: "Club Vistara Forex Card" };
     render(
-      <RecommendationPanel
+      <Results
         recommendation={recommendation({
           alternatives: [alternative],
+          comparison: [evaluation(), alternative],
           tied_with_recommended: ["card-2"],
         })}
         sessionId="s"
       />,
     );
-    expect(screen.getByText(/Effectively tied with the top pick/)).toBeInTheDocument();
+    expect(screen.getByText(/effectively tied with the top pick/)).toBeInTheDocument();
   });
 
   it("says so when a provider publishes no application route", () => {
     const noRoute = evaluation({ application_url: null });
     render(
-      <RecommendationPanel recommendation={recommendation({ recommended_card: noRoute })} sessionId="s" />,
+      <Results recommendation={recommendation({ recommended_card: noRoute })} sessionId="s" />,
     );
-    expect(screen.getByText(/does not publish an online application/)).toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: "Apply for this card" })).not.toBeInTheDocument();
+    expect(screen.getByText(/publishes no online application/)).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /Apply at/ })).not.toBeInTheDocument();
   });
 
   it("records the click before opening the provider's flow", async () => {
     const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValue(
       Response.json({ application_url: "https://provider.example/apply", is_affiliate: false }),
     );
-    render(<RecommendationPanel recommendation={recommendation()} sessionId="session-123" />);
+    render(<Results recommendation={recommendation()} sessionId="session-123" />);
 
-    await userEvent.click(screen.getByRole("button", { name: "Apply for this card" }));
+    await userEvent.click(screen.getByRole("button", { name: /Apply at/ }));
 
     expect(fetchSpy).toHaveBeenCalledWith(
       expect.stringContaining("/api/application-click"),
@@ -72,7 +73,7 @@ describe("RecommendationPanel", () => {
 
   it("handles having no qualifying card", () => {
     render(
-      <RecommendationPanel
+      <Results
         recommendation={recommendation({ recommended_card: null, alternatives: [] })}
         sessionId="s"
       />,
@@ -98,7 +99,7 @@ describe("ProfileSummary", () => {
 
   it("shows an uncertain spend as a range, marked as an estimate", () => {
     render(<ProfileSummary profile={base} />);
-    expect(screen.getByText("GBP 1,000–1,200 (estimated)")).toBeInTheDocument();
+    expect(screen.getByText("GBP 1,000–1,200 (est.)")).toBeInTheDocument();
   });
 
   it("does not add an estimate qualifier to a figure the user stated", () => {

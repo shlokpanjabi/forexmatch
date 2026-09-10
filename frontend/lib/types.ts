@@ -28,6 +28,30 @@ export interface CardSummary {
   last_verified_at: string | null;
 }
 
+export interface Fee {
+  fee_type: string;
+  amount: string | null;
+  currency: string | null;
+  percentage: string | null;
+  min_amount: string | null;
+  max_amount: string | null;
+  /** The provider publishes no figure. This is NOT zero. */
+  is_unknown: boolean;
+  /** The provider states the charge is nil. */
+  is_waived: boolean;
+  conditions: string | null;
+}
+
+export interface CardDetail extends CardSummary {
+  application_url: string | null;
+  fees: Fee[];
+  limits: Array<{ limit_type: string; amount: string | null; currency: string | null; period: string | null }>;
+  benefits: Array<{ benefit_type: string; description: string; value: string | null }>;
+  eligibility: Array<{ criterion: string; value: string | null; description: string }>;
+  currencies: Array<{ code: string; supported: boolean; direct_wallet: boolean }>;
+  sources: Source[];
+}
+
 export interface CostComponent {
   fee_type: string;
   label: string;

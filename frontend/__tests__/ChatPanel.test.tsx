@@ -71,7 +71,7 @@ describe("ChatPanel", () => {
     await user.click(screen.getByRole("button", { name: /Indian student going to the UK/ }));
 
     const activity = await screen.findByRole("region", { name: "Agent activity" });
-    expect(activity).toHaveTextContent("Searching the card catalogue");
+    expect(activity).toHaveTextContent("Searching the catalogue");
     expect(activity).toHaveTextContent("14 cards found");
     // The completed event replaces the started one rather than duplicating it.
     expect(activity.querySelectorAll("li")).toHaveLength(1);
@@ -85,7 +85,7 @@ describe("ChatPanel", () => {
 
     expect(await screen.findByText("Multi-Currency Forex Card")).toBeInTheDocument();
     expect(screen.getByText("82%")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Apply for this card" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Apply at/ })).toBeInTheDocument();
     expect(
       screen.getByRole("link", { name: "Fees and Charges — Multi-Currency Forex Card" }),
     ).toHaveAttribute("href", "https://www.axis.bank.in/fees.pdf");
@@ -98,8 +98,9 @@ describe("ChatPanel", () => {
     render(<ChatPanel />);
     await user.click(screen.getByRole("button", { name: /Indian student going to the UK/ }));
 
-    expect(await screen.findByText(/What we assumed about you \(1\)/)).toBeInTheDocument();
-    expect(screen.getByText(/Cards ruled out \(1\)/)).toBeInTheDocument();
+    // Assumptions are now always visible rather than behind a counted disclosure.
+    expect(await screen.findByText(/What we assumed about you/)).toBeInTheDocument();
+    expect(screen.getByText(/Cards ruled out/)).toBeInTheDocument();
     expect(screen.getByText(/No application route is published/)).toBeInTheDocument();
   });
 

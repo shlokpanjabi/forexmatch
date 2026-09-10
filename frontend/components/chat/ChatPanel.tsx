@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { API_BASE, ApiRequestError, ApiUnreachableError, streamChat } from "@/lib/api";
 import type { ChatMessage, Profile, Recommendation, ToolEvent } from "@/lib/types";
 import { AgentActivity } from "@/components/activity/AgentActivity";
-import { RecommendationPanel } from "@/components/recommendation/RecommendationPanel";
+import { Results } from "@/components/results/Results";
 import { ProfileSummary } from "./ProfileSummary";
 
 const EXAMPLES = [
@@ -170,9 +170,7 @@ export function ChatPanel() {
 
         {profile && <ProfileSummary profile={profile} />}
 
-        {recommendation && (
-          <RecommendationPanel recommendation={recommendation} sessionId={sessionId} />
-        )}
+        {recommendation && <Results recommendation={recommendation} sessionId={sessionId} />}
 
         {apiUnreachable && (
           <div

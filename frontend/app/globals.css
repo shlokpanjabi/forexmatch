@@ -1,26 +1,106 @@
 @import "tailwindcss";
 
+/* ---------------------------------------------------------------------------
+   ForexMatch design tokens.
+
+   A committed dark theme. The palette is deliberately not fintech-blue: a warm
+   near-black with a red-shifted neutral ramp, and vermillion as the single
+   accent. Because the accent is loud, it is rationed — it marks the primary
+   action, the leading result, and nothing else.
+
+   Money needs three semantic colours beyond the accent: jade for a verified
+   saving, amber for a figure we had to substitute, and the muted ramp for
+   everything unverified. Those meanings are fixed across the app.
+--------------------------------------------------------------------------- */
+
+@theme {
+  /* Surfaces — warm near-black rather than neutral grey */
+  --color-ink-950: #0a0708;
+  --color-ink-900: #100c0e;
+  --color-ink-850: #161013;
+  --color-ink-800: #1d1519;
+  --color-ink-700: #2a1f24;
+  --color-ink-600: #3a2c31;
+
+  /* Text */
+  --color-mist-50: #f8f4f3;
+  --color-mist-200: #cdc3c5;
+  --color-mist-400: #9a8d91;
+  --color-mist-500: #948589;
+
+  /* Accent — vermillion */
+  --color-ember-700: #8e1a13;
+  --color-ember-600: #c2261c;
+  --color-ember-500: #e23d2e;
+  --color-ember-400: #f2604f;
+  --color-ember-300: #ff8a7a;
+
+  /* Semantics for money */
+  --color-jade-500: #2f9d6b;
+  --color-jade-400: #4fb783;
+  --color-amber-400: #e0a33a;
+
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+
+  --radius-card: 14px;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  color-scheme: dark;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-ink-950);
+  color: var(--color-mist-50);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* The ember wash behind the hero — the one piece of atmosphere in the design.
+   Fixed, so it does not scroll with content and become a distraction. */
+.ember-wash::before {
+  content: "";
+  position: absolute;
+  inset: -20% -10% auto -10%;
+  height: 70vh;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 50% at 50% 0%, rgba(226, 61, 46, 0.22) 0%, transparent 70%),
+    radial-gradient(40% 40% at 80% 10%, rgba(142, 26, 19, 0.18) 0%, transparent 70%);
+  z-index: 0;
+}
+
+/* Micro-labels: small, uppercase, tracked, monospace. Used for section eyebrows
+   and data labels so the display type never has to shout twice. */
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-mist-500);
+}
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+}
+
+/* Figures line up in tables and comparisons. */
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

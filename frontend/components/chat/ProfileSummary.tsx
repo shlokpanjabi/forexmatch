@@ -1,12 +1,12 @@
 "use client";
 
 import type { Profile } from "@/lib/types";
+import { Label } from "@/components/ui/primitives";
 
 /**
  * What the agent has understood so far.
  *
- * Ranges are shown as ranges. BUILD.md section 9: an estimate must not be
- * redisplayed as a precise figure.
+ * Ranges stay ranges: an estimate is never redisplayed as a precise figure.
  */
 export function ProfileSummary({ profile }: { profile: Profile }) {
   const spend = profile.monthly_spend;
@@ -22,12 +22,12 @@ export function ProfileSummary({ profile }: { profile: Profile }) {
     const min = spend.min_amount ? Math.round(Number(spend.min_amount)).toLocaleString() : null;
     const max = spend.max_amount ? Math.round(Number(spend.max_amount)).toLocaleString() : null;
     const range = min && max && min !== max ? `${min}–${max}` : (min ?? max);
-    const qualifier = spend.confidence === "stated" ? "" : " (estimated)";
+    const qualifier = spend.confidence === "stated" ? "" : " (est.)";
     facts.push(["Monthly spend", `${currency} ${range}${qualifier}`.trim()]);
   }
 
   if (profile.atm_withdrawals_per_month !== null)
-    facts.push(["Cash withdrawals", `${profile.atm_withdrawals_per_month} a month`]);
+    facts.push(["Cash", `${profile.atm_withdrawals_per_month}× a month`]);
   else if (profile.atm_usage !== "unknown") facts.push(["Cash use", profile.atm_usage]);
 
   if (profile.priorities_customised) {
@@ -40,16 +40,14 @@ export function ProfileSummary({ profile }: { profile: Profile }) {
   return (
     <section
       aria-label="What we understood"
-      className="rounded-lg border border-slate-200 bg-white p-3 dark:border-slate-800 dark:bg-slate-900"
+      className="rounded-[--radius-card] border border-ink-800 bg-ink-900 p-4"
     >
-      <h2 className="mb-2 text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
-        What we understood
-      </h2>
-      <dl className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-sm sm:grid-cols-3">
+      <Label>What we understood</Label>
+      <dl className="mt-3 grid grid-cols-2 gap-x-5 gap-y-3 sm:grid-cols-3">
         {facts.map(([label, value]) => (
           <div key={label}>
-            <dt className="text-xs text-slate-500 dark:text-slate-400">{label}</dt>
-            <dd className="text-slate-800 dark:text-slate-200">{value}</dd>
+            <dt className="font-mono text-[10px] uppercase tracking-wider text-mist-500">{label}</dt>
+            <dd className="mt-0.5 text-sm text-mist-100">{value}</dd>
           </div>
         ))}
       </dl>
