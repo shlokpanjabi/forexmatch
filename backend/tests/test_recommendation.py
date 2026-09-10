@@ -175,7 +175,10 @@ def test_zero_markup_conversion_beats_a_full_spread(uk_student_profile):
     zero_score = zero.score_for(ScoreComponent.CURRENCY_SUPPORT).score
     spread_score = spread.score_for(ScoreComponent.CURRENCY_SUPPORT).score
     assert zero_score > spread_score
-    assert "no cross-currency markup" in zero.score_for(ScoreComponent.CURRENCY_SUPPORT).explanation
+    explanation = zero.score_for(ScoreComponent.CURRENCY_SUPPORT).explanation
+    assert "no cross-currency fee" in explanation
+    # It must not read as a free conversion — the rate spread is still unknown.
+    assert "spread is not published" in explanation
 
 
 def test_card_with_no_currency_support_and_no_conversion_terms_is_excluded(uk_student_profile):
@@ -201,3 +204,58 @@ def test_unverified_currency_list_is_reported_not_asserted(uk_student_profile):
     explanation = result.recommended.score_for(ScoreComponent.CURRENCY_SUPPORT).explanation
     assert "could not be verified" in explanation
     assert "does not" not in explanation.lower()
+
+
+def test_a_waived_conversion_fee_is_not_a_free_conversion(uk_student_profile):
+    """A provider advertising "zero cross-currency fees" has told us about their
+    fee, not their rate.
+
+    A card that does not hold the spend currency converts every purchase at the
+    provider's own rate, and that spread is not published. Pricing it at zero
+    would let a single-currency card look free to spend abroad — the same
+    mistake as reading an unpublished fee as nil (BUILD.md sections 19, 58).
+    """
+    from app.enums import FeeType
+
+    zero_fee = make_card(
+        name="Zero Fee USD",
+        wallet_currencies=("USD",),
+        cross_currency_pct=Decimal("0"),
+        issuance=Decimal(0),
+        reload_fee=Decimal(0),
+        atm_fee=Decimal(0),
+    )
+    gbp_wallet = make_card(name="Holds GBP", wallet_currencies=("GBP",), issuance=Decimal(500))
+    # A card that publishes its markup supplies the worst-case baseline. A card
+    # that holds GBP does not — it never converts, so its zero says nothing.
+    discloses = make_card(
+        name="Discloses 3.5%", wallet_currencies=("USD",), cross_currency_pct=Decimal("3.5")
+    )
+
+    result = recommend(uk_student_profile, [zero_fee, gbp_wallet, discloses], gbp_inr_table())
+    converting = next(e for e in result.comparison if e.card.card_name == "Zero Fee USD")
+
+    # The conversion is costed, not free.
+    assert converting.cost.total_inr > 0
+    assert FeeType.CROSS_CURRENCY in converting.cost.imputed_components
+    note = next(
+        c.imputation_note for c in converting.cost.components if c.fee_type is FeeType.CROSS_CURRENCY
+    )
+    assert note and "spread is not published" in note
+
+    # And the user is told why.
+    assert any("does not hold GBP" in a and "spread" in a for a in converting.cost.assumptions)
+
+
+def test_holding_the_currency_really_is_free_to_convert(uk_student_profile):
+    """The counterpart: no conversion happens, so nothing is imputed."""
+    from app.enums import FeeType
+
+    gbp_wallet = make_card(name="Holds GBP", wallet_currencies=("GBP",))
+    result = recommend(uk_student_profile, [gbp_wallet], gbp_inr_table())
+
+    cross = next(
+        c for c in result.recommended.cost.components if c.fee_type is FeeType.CROSS_CURRENCY
+    )
+    assert cross.amount_inr == 0
+    assert not cross.is_imputed

@@ -163,9 +163,14 @@ def score_currency(card: CardFacts, profile: UserProfile, usage: UsageProfile) -
             # would rank a zero-markup card as though it charged full spread.
             score = _clamp(70.0 - float(markup) * 10.0)
             if markup == 0:
+                # No penalty here: every converting card has an undisclosed
+                # spread, so it does not separate them. A published 0% fee is
+                # genuinely better than a published 3.5% one. What the spread
+                # does affect is the *cost* estimate, handled in the calculator.
                 detail = (
-                    f"Does not hold {target}, so purchases are converted — but the provider "
-                    "charges no cross-currency markup"
+                    f"Does not hold {target}. The provider charges no cross-currency fee, but "
+                    "every purchase is still converted at their own rate and the spread is not "
+                    "published"
                 )
             else:
                 detail = f"Does not hold {target}; every purchase is converted at {markup}%"

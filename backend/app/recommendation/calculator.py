@@ -142,6 +142,11 @@ class _PricedComponent:
     amount_inr: Decimal | None
     basis: str
     missing_reason: str | None = None
+    #: False when the charge structurally cannot arise for this card — a card
+    #: holding the spend currency never converts, so its zero is not evidence
+    #: about what conversion costs. Such zeros must not become the baseline a
+    #: missing figure is imputed from, or the worst case collapses to nil.
+    counts_for_imputation: bool = True
 
 
 @dataclass
@@ -267,7 +272,12 @@ def _price_card(card: CardFacts, usage: UsageProfile, fx: FXRateTable) -> _CardP
     atm_fee = card.fee(FeeType.ATM_WITHDRAWAL, currency=currency)
     if usage.atm_withdrawals_total == 0:
         pricing.components.append(
-            _PricedComponent(FeeType.ATM_WITHDRAWAL, Decimal(0), "no cash withdrawals expected")
+            _PricedComponent(
+                FeeType.ATM_WITHDRAWAL,
+                Decimal(0),
+                "no cash withdrawals expected",
+                counts_for_imputation=False,
+            )
         )
     elif atm_fee is None or not atm_fee.is_known:
         pricing.components.append(
@@ -319,18 +329,46 @@ def _price_card(card: CardFacts, usage: UsageProfile, fx: FXRateTable) -> _CardP
                 FeeType.CROSS_CURRENCY,
                 Decimal(0),
                 f"{currency} held directly on the card, so no cross-currency charge",
+                counts_for_imputation=False,
             )
         )
     else:
         cross_fee = card.fee(FeeType.CROSS_CURRENCY)
-        if cross_fee is None or not cross_fee.is_known:
+        published_markup = cross_fee.effective_percentage if cross_fee is not None else None
+
+        if cross_fee is None or not cross_fee.is_known or not published_markup:
+            # The card does not hold this currency, so every purchase is
+            # converted at the provider's own rate — and that rate carries a
+            # spread nobody publishes.
+            #
+            # A provider advertising "zero cross-currency fees" has told us
+            # about their *fee*, not their *rate*. Treating that as zero cost
+            # would let a single-currency card look free to spend abroad, which
+            # is the same mistake as reading an unpublished fee as nil. The
+            # conversion cost is unknown, so it is imputed like any other
+            # missing figure (BUILD.md sections 19 and 58).
+            # A provider can say "nil" either by waiving the fee or by
+            # publishing 0%. Both are statements about the fee, and neither
+            # says anything about the rate.
+            states_no_fee = cross_fee is not None and cross_fee.is_known and not published_markup
+            reason = (
+                "the provider charges no conversion fee, but converts at their own rate and the "
+                "spread is not published"
+                if states_no_fee
+                else "not published"
+            )
             pricing.components.append(
                 _PricedComponent(
                     FeeType.CROSS_CURRENCY,
                     None,
                     f"all {currency} spend converted",
-                    "not published",
+                    reason,
                 )
+            )
+            pricing.assumptions.append(
+                f"{card.card_name} does not hold {currency}. Every purchase is converted, and "
+                "the provider does not publish the rate spread it applies, so that cost is "
+                "estimated rather than known."
             )
         else:
             amount, reason = _price_flat_and_percentage(
@@ -379,7 +417,7 @@ def calculate_costs(
     worst: dict[FeeType, Decimal] = {}
     for entry in priced:
         for component in entry.components:
-            if component.amount_inr is None:
+            if component.amount_inr is None or not component.counts_for_imputation:
                 continue
             current = worst.get(component.fee_type)
             if current is None or component.amount_inr > current:
