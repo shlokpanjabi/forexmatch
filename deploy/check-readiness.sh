@@ -32,6 +32,11 @@ if [[ -n "$ACCOUNT" ]]; then
   ok "authenticated" "account $ACCOUNT"
 else
   bad "authenticated" "session expired — run 'aws login'"
+  # Without credentials every service probe fails for the same reason. Reporting
+  # five separate outages would hide the one real problem.
+  echo
+  echo "Cannot check services without credentials. Run 'aws login' and re-run this."
+  exit 1
 fi
 
 CREATED=$(aws account get-account-information --region "$REGION" \
